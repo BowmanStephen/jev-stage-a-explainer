@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F3EEE3">
+<title>Stage A lesson: teaching a machine to spot reckless dunks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bone: #F3EEE3;
+    --iron: #1A1A1A;
+    --slate: #6B6B6B;
+    --ash: #B7B7B7;
+    --rubric: #C23A2A;
+    --paper: var(--bone);
+    --ink: var(--iron);
+    --muted: var(--slate);
+    --faint: var(--ash);
+    --mark: var(--rubric);
+    --line: color-mix(in srgb, var(--iron) 18%, transparent);
+    --line-strong: color-mix(in srgb, var(--iron) 32%, transparent);
+    --measure: 38ch;
+    --rail-w: 2.5rem;
+    --index-w: 11.5rem;
+    --pane-w: 26rem;
+    --pane-wide: min(52rem, 92vw);
+    --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --font-ui: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html {
+    color-scheme: light;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow: hidden;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--rubric) 28%, var(--bone));
+    color: var(--iron);
+  }
+  a {
+    color: var(--rubric);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  .index-btn:focus-visible,
+  .rail-key:focus-visible,
+  .pane-close:focus-visible,
+  .pane-head h2:focus-visible {
+    outline: 2px solid var(--rubric);
+    outline-offset: 2px;
+  }
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--iron);
+    color: var(--bone);
+    padding: 0.5rem 0.75rem;
+    z-index: 40;
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+  }
+  .skip-link:focus {
+    left: 0.75rem;
+    top: 0.75rem;
+  }
+  .scaps {
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    text-transform: lowercase;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    border-bottom: 1px solid var(--line);
+  }
+  h1, h2 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin: 0;
+    text-wrap: pretty;
+    color: var(--ink);
+  }
+  h1 { font-size: clamp(1.45rem, 2vw, 1.85rem); margin-bottom: 0.75rem; }
+  h2 { font-size: 1.15rem; margin: 0; }
+  p { margin: 0.6rem 0; }
+  .lead { font-size: 1.05rem; max-width: 42ch; }
+  .muted { color: var(--muted); }
+  .faint { color: var(--muted); font-size: 0.92rem; }
+  strong { font-weight: 600; }
+
+  /* —— Workspace: index | rail | stack —— */
+  .workspace {
+    display: grid;
+    grid-template-columns: var(--index-w) var(--rail-w) minmax(0, 1fr);
+    height: 100vh;
+    height: 100dvh;
+    max-width: 100%;
+  }
+
+  /* Left index */
+  .index {
+    border-right: 1px solid var(--line-strong);
+    padding: 1.15rem 0.9rem 1.5rem;
+    overflow-y: auto;
+    background: var(--paper);
+  }
+  .index .edition {
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.8125rem;
+    color: var(--slate);
+    margin: 0 0 0.85rem;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.55rem;
+    line-height: 1.4;
+  }
+  .index-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .index-list li {
+    margin: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .index-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.4rem 0 0.4rem 0.45rem;
+    margin-left: -0.45rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 transparent;
+  }
+  .index-btn:hover {
+    color: var(--rubric);
+  }
+  .index-btn.is-open {
+    color: var(--rubric);
+    font-weight: 500;
+  }
+  .index-btn.is-top {
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 0 var(--rubric);
+  }
+  .index-group {
+    margin-top: 0.65rem;
+    padding-top: 0.35rem;
+  }
+  .index-group-label {
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.75rem;
+    color: var(--slate);
+    margin: 0 0 0.2rem;
+    line-height: 1.4;
+  }
+
+  /* Grade rail — chrome that opens notes */
+  .rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.75rem 0;
+    border-right: 1px solid var(--line-strong);
+    background: var(--paper);
+    position: relative;
+  }
+  .rail::before,
+  .rail::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-color: var(--rubric);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .rail::before {
+    top: 0;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .rail::after {
+    bottom: 0;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+  .rail-rule {
+    width: 1px;
+    flex: 1 1 auto;
+    background: var(--line-strong);
+    min-height: 1rem;
+  }
+  .rail-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid var(--rubric);
+    color: var(--rubric);
+    background: var(--paper);
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .rail-key::after {
+    content: "";
+    position: absolute;
+    /* drawn 1.75rem (~28px); expand hit to ≥44px */
+    inset: -8px;
+  }
+  .rail-key:hover {
+    background: var(--rubric);
+    color: var(--bone);
+  }
+  /* quieter “in stack” — open but not top */
+  .rail-key.is-open:not(.is-top) {
+    background: var(--paper);
+    color: var(--rubric);
+    box-shadow: inset 0 -2px 0 0 var(--rubric);
+  }
+  /* only top-of-stack key gets filled invert */
+  .rail-key.is-top {
+    background: var(--rubric);
+    color: var(--bone);
+    box-shadow: none;
+  }
+  .rail-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.75rem;
+    color: var(--slate);
+    margin: 0.25rem 0;
+  }
+
+  /* Stack stage */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+  }
+  .stack-trail {
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0.35rem 1rem;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    color: var(--slate);
+    border-bottom: 1px solid var(--line);
+    line-height: 1.4;
+  }
+  .stack-trail[hidden] { display: none; }
+  .stage-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    pointer-events: none;
+    z-index: 0;
+    color: var(--ash);
+    font-family: var(--font-ui);
+    font-size: 0.88rem;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+  }
+  .stage-hint[hidden] { display: none; }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .pane.is-root .pane-head h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .pane.is-root .pane-head {
+    justify-content: flex-end;
+    min-height: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .stage::before,
+  .stage::after {
+    content: "";
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-color: var(--rubric);
+    border-style: solid;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .stage::before {
+    top: 0;
+    left: 0;
+    border-width: 1px 0 0 1px;
+  }
+  .stage::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 1px 1px 0;
+  }
+  .stack {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 1;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: auto; /* snap — do not chain with pane-in */
+    position: relative;
+    z-index: 1;
+  }
+  .pane {
+    flex: 0 0 var(--pane-w);
+    width: var(--pane-w);
+    max-width: 100%;
+    border-right: 1px solid var(--line-strong);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--paper);
+    animation: pane-in 220ms ease-out;
+  }
+  .pane.is-wide {
+    flex-basis: var(--pane-wide);
+    width: var(--pane-wide);
+  }
+  @keyframes pane-in {
+    from { opacity: 0; transform: translateX(0.75rem); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pane { animation: none; }
+  }
+  .pane-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem 0.65rem;
+    border-bottom: 1px solid var(--line-strong);
+    flex-shrink: 0;
+  }
+  .pane-head h2 {
+    flex: 1;
+    min-width: 0;
+    font-size: 1.05rem;
+  }
+  .pane-close {
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--slate);
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+  .pane-close:hover {
+    color: var(--rubric);
+    border-color: var(--rubric);
+  }
+  .pane-close[hidden] { display: none; }
+  .pane-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem 1.05rem 1.5rem;
+    min-height: 0;
+  }
+  .pane-body > p:first-child,
+  .pane-body > .lead:first-child {
+    margin-top: 0;
+  }
+  .pane-body p,
+  .pane-body ul,
+  .pane-body ol,
+  .pane-body blockquote {
+    max-width: var(--measure);
+  }
+  .pane.is-wide .pane-body p,
+  .pane.is-wide .pane-body ul,
+  .pane.is-wide .pane-body ol {
+    max-width: 62ch;
+  }
+
+  /* In-note links that open stack panes */
+  a[data-open],
+  button.note-link {
+    color: var(--rubric);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--rubric) 45%, transparent);
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  a[data-open]:hover,
+  button.note-link:hover {
+    border-bottom-color: var(--rubric);
+  }
+
+  .hub-links {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    max-width: 42ch;
+  }
+  .hub-links li {
+    border-bottom: 1px solid var(--line);
+    padding: 0.4rem 0;
+  }
+  .hub-links a,
+  .hub-links button {
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.88rem;
+  }
+
+  ol.steps {
+    margin: 0.5rem 0 0;
+    padding: 0 0 0 1.25rem;
+    max-width: var(--measure);
+  }
+  ol.steps li {
+    margin: 0.5rem 0;
+    padding-left: 0.2rem;
+  }
+  ol.steps li::marker {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    color: var(--rubric);
+  }
+
+  .live-bars {
+    list-style: none;
+    margin: 0.75rem 0;
+    padding: 0;
+    max-width: 42ch;
+  }
+  .live-bars li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-ui);
+    font-size: 0.86rem;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+  }
+  .live-bars li:last-child { border-bottom: 0; }
+  .live-bars .lbl {
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    color: var(--slate);
+  }
+  .live-bars .val {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .score-meta {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--line);
+    padding-top: 0.55rem;
+  }
+  .frac { color: var(--slate); font-weight: 400; }
+  .exhibit-label {
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+    color: var(--slate);
+    margin: 0 0 0.45rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line-strong);
+    margin-top: 0.65rem;
+    background: var(--paper);
+    padding: 0.5rem 0.35rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    line-height: 1.45;
+    font-variant-numeric: tabular-nums;
+  }
+  th, td {
+    text-align: left;
+    padding: 0.45rem 0.55rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  thead th {
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    color: var(--iron);
+    background: var(--bone);
+    white-space: nowrap;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  tbody th { font-weight: 600; white-space: nowrap; }
+  tbody tr:last-child th,
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr.residual {
+    background: color-mix(in srgb, var(--rubric) 6%, var(--bone));
+    box-shadow: inset 2px 0 0 0 var(--rubric);
+  }
+  .snip {
+    max-width: 18rem;
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.88rem;
+  }
+  .miss {
+    color: var(--rubric);
+    font-weight: 600;
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+  }
+  .skip {
+    color: var(--slate);
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+  }
+
+  blockquote.example {
+    margin: 0.75rem 0;
+    padding: 0.55rem 0 0.55rem 0.85rem;
+    border-left: 1px solid var(--rubric);
+    color: var(--ink);
+    font-style: italic;
+    max-width: 42ch;
+  }
+  .gold-list {
+    list-style: none;
+    margin: 0.45rem 0;
+    padding: 0;
+    max-width: var(--measure);
+  }
+  .gold-list li {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.96rem;
+  }
+  .gold-list li:last-child { border-bottom: 0; }
+  .nota {
+    margin: 0.85rem 0 0;
+    padding: 0.55rem 0 0.55rem 0.75rem;
+    border-left: 1px solid var(--rubric);
+    max-width: 42ch;
+  }
+  .nota .scaps {
+    display: block;
+    color: var(--rubric);
+    font-size: 0.72rem;
+    margin-bottom: 0.2rem;
+  }
+  .files ul {
+    list-style: none;
+    margin: 0.45rem 0 0;
+    padding: 0;
+  }
+  .files li {
+    font-family: var(--font-ui);
+    font-size: 0.76rem;
+    line-height: 1.4;
+    color: var(--slate);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--line);
+    word-break: break-all;
+  }
+  .files li:last-child { border-bottom: 0; }
+  .files code { border: 0; color: var(--ink); }
+
+  /* Note templates — hidden source for panes */
+  #note-library { display: none; }
+
+  @media (max-width: 820px) {
+    body { overflow: auto; }
+    .workspace {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr;
+      height: auto;
+      min-height: 100dvh;
+    }
+    .index {
+      border-right: 0;
+      border-bottom: 1px solid var(--line-strong);
+      max-height: 10rem;
+    }
+    .index-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .rail {
+      flex-direction: row;
+      justify-content: center;
+      border-right: 0;
+      border-bottom: 1px solid var(--line-strong);
+      padding: 0.4rem 0.5rem;
+      gap: 0.35rem;
+    }
+    .rail-rule,
+    .rail-label { display: none; }
+    .rail::before,
+    .rail::after { display: none; }
+    .stage {
+      min-height: 70vh;
+    }
+    .pane,
+    .pane.is-wide {
+      flex-basis: min(100vw, 28rem);
+      width: min(100vw, 28rem);
+    }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#stack">Skip to notes</a>
+<div class="workspace">
+  <nav class="index" aria-label="Lesson notes">
+    <p class="edition">Stage A · notes</p>
+    <ul class="index-list">
+      <li><button type="button" class="index-btn" data-open="hub">Hub</button></li>
+      <li><button type="button" class="index-btn" data-open="what-this-is">What this is</button></li>
+      <li><button type="button" class="index-btn" data-open="what-jev-is">What Jev is</button></li>
+      <li><button type="button" class="index-btn" data-open="caleb">Caleb project</button></li>
+    </ul>
+    <div class="index-group">
+      <p class="index-group-label">Five grades</p>
+      <ul class="index-list">
+        <li><button type="button" class="index-btn" data-open="heat">Heat</button></li>
+        <li><button type="button" class="index-btn" data-open="toxic">Toxic masculinity</button></li>
+        <li><button type="button" class="index-btn" data-open="speech">Speech shape</button></li>
+        <li><button type="button" class="index-btn" data-open="hindsight">Hindsight mockery</button></li>
+        <li><button type="button" class="index-btn" data-open="bad-faith">Bad faith</button></li>
+      </ul>
+    </div>
+    <ul class="index-list" style="margin-top:0.65rem">
+      <li><button type="button" class="index-btn" data-open="what-we-did">What we did</button></li>
+      <li><button type="button" class="index-btn" data-open="scorecard">Final scorecard</button></li>
+      <li><button type="button" class="index-btn" data-open="walkthrough">Walkthrough</button></li>
+      <li><button type="button" class="index-btn" data-open="parked">What's parked</button></li>
+      <li><button type="button" class="index-btn" data-open="all-20">All 20 posts</button></li>
+      <li><button type="button" class="index-btn" data-open="files">Files</button></li>
+    </ul>
+  </nav>
+
+  <aside class="rail" aria-label="Grade shortcuts">
+    <div class="rail-rule" aria-hidden="true"></div>
+    <button type="button" class="rail-key" data-open="heat" data-grade="H" title="Heat" aria-label="Open Heat note">H</button>
+    <button type="button" class="rail-key" data-open="toxic" data-grade="T" title="Toxic masculinity" aria-label="Open Toxic masculinity note">T</button>
+    <button type="button" class="rail-key" data-open="speech" data-grade="S" title="Speech shape" aria-label="Open Speech shape note">S</button>
+    <button type="button" class="rail-key" data-open="hindsight" data-grade="Hi" title="Hindsight mockery" aria-label="Open Hindsight mockery note">Hi</button>
+    <button type="button" class="rail-key" data-open="bad-faith" data-grade="B" title="Bad faith" aria-label="Open Bad faith note">B</button>
+    <span class="rail-label">grades</span>
+    <div class="rail-rule" aria-hidden="true"></div>
+  </aside>
+
+  <main class="stage" id="main">
+    <p class="stack-trail" id="stack-trail" hidden></p>
+    <p class="stage-hint" id="stage-hint">Pick a note on the left to open it here.</p>
+    <div class="stack" id="stack" role="region" aria-label="Open notes" tabindex="-1"></div>
+    <div id="stack-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  </main>
+</div>
+
+<div id="note-library" aria-hidden="true">
+  <template id="note-hub" data-title="Stage A lesson" data-wide="0">
+    <h1>Stage A lesson: teaching a machine to spot reckless dunks</h1>
+    <p class="lead">This is a short lesson you can read aloud. It explains what we built in Stage A of Stephen’s Caleb Williams fact-check work, why we used a specialized scorer instead of a chatty essay model, and what the numbers actually mean.</p>
+    <p class="muted">Open linked notes into the stack — associative, not one long forced chapter. Full table of contents lives in the index.</p>
+    <ul class="hub-links">
+      <li><a href="#" data-open="what-this-is">What this is</a></li>
+      <li><a href="#" data-open="scorecard">Final scorecard</a></li>
+      <li><a href="#" data-open="walkthrough">Walkthrough (Acho tw-001)</a></li>
+      <li><a href="#" data-open="heat">Heat</a> <span class="muted">· one grade to start</span></li>
+    </ul>
+  </template>
+
+  <template id="note-what-this-is" data-title="What this is" data-wide="0">
+    <p>Stage A was a controlled test. We took twenty public posts and clips about Caleb Williams, scored each one by hand on five fixed questions, asked a specialized model named <a href="#" data-open="what-jev-is">Jev</a> to score the same posts, compared the answers, rewrote the grading rules until the scores lined up, and stopped.</p>
+    <p class="muted">The point was not to publish a leaderboard. The point was to prove we can triage nasty or bad-faith dunks for a human to review later.</p>
+    <p>See also: <a href="#" data-open="caleb">Caleb project</a>, <a href="#" data-open="heat">five grades</a>, <a href="#" data-open="what-we-did">what we did</a>, <a href="#" data-open="scorecard">scorecard</a>.</p>
+  </template>
+
+  <template id="note-what-jev-is" data-title="What Jev is" data-wide="0">
+    <p>Jev is a specialized scoring model. You give it short text (and a little timing context about what was known when the post went out). It returns structured grades on fixed axes. It does not write a rebuttal essay. It does not argue. It answers the checklist.</p>
+    <p class="muted">That matters because triage is a different job from writing. A chatty model wants to explain, hedge, and sound helpful. A scorer has to pick bands and <a href="#" data-open="speech">speech shapes</a> the same way every time so a human can scan for the posts that deserve a fact-check.</p>
+    <p>For this spike we pinned the model to <code class="mono">typesafe/jev-1.13-20260917</code>.</p>
+    <p>See also: <a href="#" data-open="what-this-is">What this is</a>, <a href="#" data-open="scorecard">Final scorecard</a>.</p>
+  </template>
+
+  <template id="note-caleb" data-title="Caleb project" data-wide="0">
+    <p>Caleb Williams draws a lot of public pile-on after injuries and emotional moments: toughness policing, “he’s soft,” “he’s acting,” and jokes that land as character attacks.</p>
+    <p>Stephen’s project flags reckless or slanderous dunks so a human can verify claims and draft a sourced rebuttal when it is worth saying something. It is not a harassment machine. It does not auto-post dunks back. Triage wakes a person. The person decides whether anything goes out.</p>
+    <p class="muted">Stage A asks: can a cheap specialized scorer agree with a human on the signals that matter for that triage?</p>
+    <p>Signals: <a href="#" data-open="heat">Heat</a>, <a href="#" data-open="toxic">toxic masculinity</a>, <a href="#" data-open="speech">speech shape</a>, <a href="#" data-open="hindsight">hindsight mockery</a>, <a href="#" data-open="bad-faith">bad faith</a>.</p>
+  </template>
+
+  <template id="note-heat" data-title="Heat" data-wide="0">
+    <p><strong>Heat (0–4)</strong> — How loud and piled-on the rhetoric is. Calm report is near 0. A sustained public roast sits at 3 or 4.</p>
+    <p class="muted">Loudness is not the same as gendered toughness or motive smears. A post can score high on heat and low on <a href="#" data-open="toxic">toxic masculinity</a> or <a href="#" data-open="bad-faith">bad faith</a>.</p>
+    <p>Example: <a href="#" data-open="walkthrough">Acho tw-001</a> gold heat 3. Live agreement on this axis: <strong>100%</strong> (20/20).</p>
+    <p>See also: <a href="#" data-open="speech">Speech shape</a>, <a href="#" data-open="scorecard">Scorecard</a>.</p>
+  </template>
+
+  <template id="note-toxic" data-title="Toxic masculinity" data-wide="0">
+    <p><strong>Toxic masculinity (0–4)</strong> — Whether the dunk polices toughness with soft / man’s-game / gendered framing. Defenders who reject that pile-on score 0 here even if the clip is emotional.</p>
+    <p class="muted">Independent of <a href="#" data-open="heat">heat</a>: volume is not toughness-policing.</p>
+    <p>Example: <a href="#" data-open="walkthrough">Acho tw-001</a> gold 2 (sacred-rule toughness gate). Live agreement: <strong>100%</strong> (20/20).</p>
+  </template>
+
+  <template id="note-speech" data-title="Speech shape" data-wide="0">
+    <p><strong>Speech shape (choice)</strong> — What the speaker is <em>doing</em>: insult, joke, factual claim, insinuation, defense, report, or other. We judge the speech act, not the speaker’s self-label. “Gotta get these jokes” while running a toughness put-down is still an insult.</p>
+    <p class="muted">Exact match required. Offline recount after Portnoy gold flip: <strong>19/20</strong> (live before flip 90%).</p>
+    <p>Residual edge: <a href="#" data-open="parked">tw-005 parked</a>. Walkthrough: <a href="#" data-open="walkthrough">Acho</a> packages put-down as “jokes” → insult.</p>
+  </template>
+
+  <template id="note-hindsight" data-title="Hindsight mockery" data-wide="0">
+    <p><strong>Hindsight mockery (yes / no / n/a)</strong> — Whether the dunk depends on treating the injury as milder than the tears-and-cart optics, often after milder framing was already circulating. “Now that we know he’s okay…” openers are the classic form. Posts with no injury context are not scored on this axis.</p>
+    <p class="muted">Only yes/no gold labels count toward agreement. Live: <strong>100%</strong> (13/13 scored).</p>
+    <p>See <a href="#" data-open="walkthrough">Acho tw-001</a> (“Now that we know Caleb is okay”).</p>
+  </template>
+
+  <template id="note-bad-faith" data-title="Bad faith" data-wide="0">
+    <p><strong>Bad faith (0–4)</strong> — Whether the speaker smears the reaction as acting, camera performance, thespian theater, or faking. This is motive attribution, not volume and not soft-language alone.</p>
+    <p class="muted">Distinct from <a href="#" data-open="heat">heat</a> and <a href="#" data-open="toxic">toxic masculinity</a>. Live agreement: <strong>100%</strong> (20/20).</p>
+    <p>Related residual framing on Portnoy: <a href="#" data-open="parked">parked note</a>.</p>
+  </template>
+
+  <template id="note-what-we-did" data-title="What we did" data-wide="0">
+    <ol class="steps">
+      <li>Froze a pack of twenty posts so nobody could swap examples mid-test. That fixed list is the “frozen pack.”</li>
+      <li>Wrote human “gold” labels: our answers to the five questions for each post.</li>
+      <li>Wrote a rubric: plain definitions of each band so the model and the humans were grading the same thing.</li>
+      <li>Ran Jev live on the pack (first meaningful live pass logged as <span class="mono">20260925-114858</span>).</li>
+      <li>Tightened the rubric where the model was soft or confused (especially heat ceilings and joke-versus-insult), then re-ran until the score axes lined up. Final live run: <span class="mono">20260925-115625</span>.</li>
+      <li>For two Portnoy posts, flipped the human gold on speech shape from joke to insult after the speech-act rule was clear, then recounted. Stage A parked after that.</li>
+    </ol>
+    <p class="faint">Agreement rules: on 0–4 scores, within one band counts as a match. Speech shape needs an exact match. Hindsight only counts posts where the gold label was yes or no (not “not applicable”).</p>
+    <p>Next: <a href="#" data-open="scorecard">Final scorecard</a> · <a href="#" data-open="all-20">All 20 posts</a>.</p>
+  </template>
+
+  <template id="note-scorecard" data-title="Final scorecard" data-wide="1">
+    <p>On the final live run, after the rubric passes — <strong>20/20</strong> posts scored.</p>
+    <ul class="live-bars" aria-label="Final live agreement">
+      <li><span class="lbl"><a href="#" data-open="heat">Heat</a></span><span class="val">100% <span class="frac">(20/20)</span></span></li>
+      <li><span class="lbl"><a href="#" data-open="toxic">Toxic masculinity</a></span><span class="val">100% <span class="frac">(20/20)</span></span></li>
+      <li><span class="lbl"><a href="#" data-open="bad-faith">Bad faith</a></span><span class="val">100% <span class="frac">(20/20)</span></span></li>
+      <li><span class="lbl"><a href="#" data-open="hindsight">Hindsight mockery</a></span><span class="val">100% <span class="frac">(13/13 scored)</span></span></li>
+      <li><span class="lbl"><a href="#" data-open="speech">Speech shape</a></span><span class="val">19/20 <span class="frac">after Portnoy gold flip · live 90% (18/20) before flip</span></span></li>
+    </ul>
+    <p class="muted">Spend was about $0.0027 for the final live pass. First-run rates were lower. The jump came from clearer written definitions, not from swapping the twenty posts.</p>
+    <p class="muted">These rates are a frozen-set check. They are not a published accuracy claim about the open internet.</p>
+    <p class="exhibit-label" style="margin-top:1rem">First run → final</p>
+    <div class="table-wrap" role="region" aria-label="Agreement rates first versus final" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Axis</th>
+            <th scope="col">First run</th>
+            <th scope="col">Final (after rubric passes)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope='row'>Heat</th><td>70% <span class='frac'>(14/20)</span></td><td><strong>100%</strong> <span class='frac'>(20/20)</span></td></tr><tr><th scope='row'>Toxic masculinity</th><td>80% <span class='frac'>(16/20)</span></td><td><strong>100%</strong> <span class='frac'>(20/20)</span></td></tr><tr><th scope='row'>Bad faith</th><td>95% <span class='frac'>(19/20)</span></td><td><strong>100%</strong> <span class='frac'>(20/20)</span></td></tr><tr><th scope='row'>Hindsight mockery</th><td>92% <span class='frac'>(12/13)</span></td><td><strong>100%</strong> <span class='frac'>(13/13)</span></td></tr><tr><th scope='row'>Speech shape</th><td>80% <span class='frac'>(16/20)</span></td><td><strong>19/20</strong> <span class="frac">(live 90%)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="score-meta">$0.0027 · <span class="mono">typesafe/jev-1.13-20260917</span> · run <span class="mono">20260925-115625</span> · rates from <span class="mono">114858</span> → <span class="mono">115625</span></p>
+  </template>
+
+  <template id="note-walkthrough" data-title="Walkthrough · Acho tw-001" data-wide="0">
+    <p>Take Emmanuel Acho’s post (<span class="mono">tw-001</span>), after milder news about the injury was circulating:</p>
+    <blockquote class="example">
+      “Now that we know Caleb is okay - this has to be said!!! Because WTF Caleb! Crying after an injury in the NFL is sacred. <em>Yes, we know Caleb is a phenomenal player, but he still gotta get these jokes</em>”
+    </blockquote>
+    <p>Human gold:</p>
+    <ul class="gold-list">
+      <li><strong><a href="#" data-open="heat">Heat</a> 3</strong> — public dunk with chorus energy, not a quiet aside.</li>
+      <li><strong><a href="#" data-open="toxic">Toxic masculinity</a> 2</strong> — sacred-rule toughness gate (“crying… is sacred”), not a slur-level purity test.</li>
+      <li><strong><a href="#" data-open="speech">Speech shape</a>: insult</strong> — the main move is a put-down, even though he packages it as “jokes.”</li>
+      <li><strong><a href="#" data-open="hindsight">Hindsight</a>: yes</strong> — “Now that we know Caleb is okay” leans on the milder framing.</li>
+      <li><strong><a href="#" data-open="bad-faith">Bad faith</a> 1</strong> — mild overdramatic shade, not a full “he’s faking” claim.</li>
+    </ul>
+    <p>Jev matched closely enough on the live run (within band on the scores; exact on speech shape and hindsight). That is the kind of post Stage A is built to catch.</p>
+    <div class="nota">
+      <span class="scaps">Why this teaches the method</span>
+      <p style="margin:0">If you only asked a chatty model “is this bad?”, you would get an essay. The five grades separate volume, gendered toughness, speech act, timing, and motive so a human can decide whether to open a fact-check file.</p>
+    </div>
+  </template>
+
+  <template id="note-parked" data-title="What’s parked" data-wide="0">
+    <p>Stage A is done for now. Stages B through D are not started.</p>
+    <p>The leftover edge case is <a href="#" data-open="speech">speech shape</a> on Dave Portnoy’s “thespian / Actors Studio” bit (<span class="mono">tw-005</span>). After we flipped gold from joke to insult on <span class="mono">tw-005</span> and <span class="mono">tw-007</span> to match the speech-act rule, recount was 19/20. On <span class="mono">tw-005</span> the model still said <code>factual_claim</code> while gold is <code>insult</code>. We accepted that as a hard edge and stopped further passes unless someone asks for another.</p>
+    <p class="muted">Offline speech-shape misses after Portnoy flip: <span class="mono">tw-005</span>. The five-question spike is usable for triage after this calibration.</p>
+    <p>Exhibit: <a href="#" data-open="all-20">All 20 posts</a>.</p>
+  </template>
+
+  <template id="note-all-20" data-title="All 20 posts" data-wide="1">
+    <p class="exhibit-label">Appendix · exhibit</p>
+    <p class="muted">Gold vs Jev on each axis (gold / model). Only misses and skips are labeled. Speech-shape gold uses the post-flip labels for Portnoy. Residual speech-shape miss marked with a vermilion detent.</p>
+    <div class="table-wrap" role="region" aria-label="All twenty posts gold versus Jev" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Speaker</th>
+            <th scope="col">Snippet</th>
+            <th scope="col">Heat</th>
+            <th scope="col">Toxic</th>
+            <th scope="col">Speech</th>
+            <th scope="col">Hindsight</th>
+            <th scope="col">Bad faith</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <th scope="row"><span class="mono">tw-001</span></th>
+          <td>Emmanuel Acho</td>
+          <td class="snip">“Now that we know Caleb is okay— this has to be said!!! Because WTF Cale…”</td>
+          <td>3/2.32</td>
+          <td>2/2.07</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.89">yes/yes</span></td>
+          <td>1/0.25</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-003</span></th>
+          <td>Emmanuel Acho</td>
+          <td class="snip">“Crying on the cart fist pump is reserved for done for season or career.…”</td>
+          <td>3/2.22</td>
+          <td>3/2.67</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.1">no/no</span></td>
+          <td>1/0.3</td>
+        </tr>
+
+        <tr class="residual">
+          <th scope="row"><span class="mono">tw-005</span></th>
+          <td>Dave Portnoy</td>
+          <td class="snip">“Who knows what&#x27;s going on with the thespian… Inside the Actors Studio.…”</td>
+          <td>2/1.35</td>
+          <td>1/0.04</td>
+          <td>insult/factual_claim <span class="miss">miss</span></td>
+          <td><span title="noul 0.08">no/no</span></td>
+          <td>3/2.53</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-007</span></th>
+          <td>Dave Portnoy</td>
+          <td class="snip">“I woke up to Bears QB @CALEBcsw spreading disinformation about me. I di…”</td>
+          <td>3/2.26</td>
+          <td>1/0.37</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.77">yes/yes</span></td>
+          <td>2/1.04</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-008</span></th>
+          <td>Craig Carton</td>
+          <td class="snip">“I don&#x27;t quite understand why people immediately thought, &#x27;Oh my God, it…”</td>
+          <td>4/3.8</td>
+          <td>2/2.5</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.7">yes/yes</span></td>
+          <td>3/2.88</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-009</span></th>
+          <td>Craig Carton</td>
+          <td class="snip">“He acted like his career ended… you&#x27;re going to root for him because yo…”</td>
+          <td>4/3.91</td>
+          <td>4/3.93</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.77">yes/yes</span></td>
+          <td>2/2.04</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-010</span></th>
+          <td>Will Compton</td>
+          <td class="snip">“Now that we&#x27;re on the other side of this news and Caleb Williams is oka…”</td>
+          <td>2/1.22</td>
+          <td>2/1.46</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.89">yes/yes</span></td>
+          <td>1/1.02</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-012</span></th>
+          <td>Will Compton</td>
+          <td class="snip">“We getting carted off the field for hamstrings now? We get in the ambul…”</td>
+          <td>3/2.93</td>
+          <td>3/2.06</td>
+          <td>insult/insult</td>
+          <td><span title="noul 0.86">yes/yes</span></td>
+          <td>2/2.16</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-013</span></th>
+          <td>Jason Whitlock</td>
+          <td class="snip">“America did not become the leader of the free world, and football did n…”</td>
+          <td>3/3</td>
+          <td>4/3.98</td>
+          <td>insult/insult</td>
+          <td><span class="skip" title="noul 0.04">n/a</span></td>
+          <td>0/0.06</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-014</span></th>
+          <td>Robert Mathis</td>
+          <td class="snip">“Sorry @RGIII (all love lil bro) but I gotta chalk this one up in the so…”</td>
+          <td>2/1.35</td>
+          <td>2/2.54</td>
+          <td>insult/insult</td>
+          <td><span class="skip" title="noul 0.04">n/a</span></td>
+          <td>0/0.53</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-015</span></th>
+          <td>Amani Toomer</td>
+          <td class="snip">“How are you gonna come in the huddle as a rookie. You got your nails pa…”</td>
+          <td>3/2.89</td>
+          <td>3/3.16</td>
+          <td>insult/insult</td>
+          <td><span class="skip" title="noul 0.05">n/a</span></td>
+          <td>0/0.22</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-016</span></th>
+          <td>James Jones</td>
+          <td class="snip">“I&#x27;m on a different side… I am cool with crying, I&#x27;ve cried during footb…”</td>
+          <td>2/1.63</td>
+          <td>0/0.19</td>
+          <td>insinuation/insinuation</td>
+          <td><span class="skip" title="noul 0.05">n/a</span></td>
+          <td>3/2.99</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-017</span></th>
+          <td>Boomer Esiason</td>
+          <td class="snip">“The level of entitlement is breathtaking — and it&#x27;s no wonder why the c…”</td>
+          <td>3/2.53</td>
+          <td>0/0.06</td>
+          <td>insult/insult</td>
+          <td><span class="skip" title="noul 0.03">n/a</span></td>
+          <td>1/0.07</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-019</span></th>
+          <td>Tyler Dunne (reporting anonymous Bears sources)</td>
+          <td class="snip">“Multiple Bears sources tell Go Long they&#x27;ve seen evidence that Williams…”</td>
+          <td>1/0.36</td>
+          <td>0/0</td>
+          <td>report/report</td>
+          <td><span class="skip" title="noul 0.04">n/a</span></td>
+          <td>0/0.01</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-021</span></th>
+          <td>Merriam-Webster</td>
+          <td class="snip">“Just spelled &#x27;conscientious&#x27; correctly on the first try.”</td>
+          <td>2/1.03</td>
+          <td>0/0.22</td>
+          <td>joke/joke</td>
+          <td><span title="noul 0.65">yes/yes</span></td>
+          <td>1/0.35</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-022</span></th>
+          <td>J.J. Watt</td>
+          <td class="snip">“A pulled hamstring while running full speed, not fun, hurts like hell……”</td>
+          <td>1/0.46</td>
+          <td>0/0.07</td>
+          <td>other/other</td>
+          <td><span title="noul 0.08">no/no</span></td>
+          <td>0/0.01</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-023</span></th>
+          <td>Dan &quot;Big Cat&quot; Katz</td>
+          <td class="snip">“There is a weird undercurrent of people online who have true Caleb Will…”</td>
+          <td>0/0.61</td>
+          <td>0/0.02</td>
+          <td>defense/defense</td>
+          <td><span title="noul 0.06">no/no</span></td>
+          <td>0/0.01</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-024</span></th>
+          <td>Maxx Crosby</td>
+          <td class="snip">“Everyone has an opinion about &#x27;oh, why do you react this way to this ce…”</td>
+          <td>0/0.15</td>
+          <td>0/0.01</td>
+          <td>defense/defense</td>
+          <td><span title="noul 0.06">no/no</span></td>
+          <td>0/0</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-025</span></th>
+          <td>Kyle Long</td>
+          <td class="snip">“U made your post now shut the fuck up will … Nobody understands how muc…”</td>
+          <td>1/1.05</td>
+          <td>0/0.08</td>
+          <td>defense/defense</td>
+          <td><span title="noul 0.06">no/no</span></td>
+          <td>0/0.01</td>
+        </tr>
+
+        <tr>
+          <th scope="row"><span class="mono">tw-026</span></th>
+          <td>Robert Griffin III</td>
+          <td class="snip">“Watching Caleb Williams sobbing with his family after losing the game w…”</td>
+          <td>0/0.01</td>
+          <td>0/0.01</td>
+          <td>defense/defense</td>
+          <td><span class="skip" title="noul 0.04">n/a</span></td>
+          <td>0/0</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:0.75rem">Residual: <a href="#" data-open="parked">parked tw-005</a> · <a href="#" data-open="scorecard">scorecard</a>.</p>
+  </template>
+
+  <template id="note-files" data-title="Files" data-wide="0">
+    <div class="files">
+      <ul>
+        <li>Rubric (what 0–4 and each speech shape mean): <code>/workspace/caleb-williams-fact-check/jev_stage_a/score_legends.md</code></li>
+        <li>Frozen pack + human gold: <code>/workspace/caleb-williams-fact-check/jev_stage_a/frozen_posts.json</code></li>
+        <li>Short final note: <code>/workspace/caleb-williams-fact-check/jev_stage_a/out/STAGE_A_FINAL_20260925.md</code></li>
+        <li>Final live run summary: <code>/workspace/caleb-williams-fact-check/jev_stage_a/out/stage_a_run_20260925-115625_summary.json</code></li>
+        <li>Per-post live scores: <code>/workspace/caleb-williams-fact-check/jev_stage_a/out/stage_a_run_20260925-115625.jsonl</code></li>
+        <li>This lesson draft: <code>/workspace/caleb-williams-fact-check/jev_stage_a/out/stage_a_lesson_draft.md</code></li>
+        <li>Explainer page (this file): <code>/workspace/caleb-williams-fact-check/jev_stage_a/out/stage_a_explainer.html</code></li>
+      </ul>
+      <p class="faint" style="margin-top:0.75rem">Paths are under <span class="mono">/workspace/caleb-williams-fact-check/</span>.</p>
+    </div>
+  </template>
+</div>
+
+<script>
+(function () {
+  var ROOT = "hub";
+  var MAX_VISIBLE = 4;
+  var stackEl = document.getElementById("stack");
+  var trailEl = document.getElementById("stack-trail");
+  var hintEl = document.getElementById("stage-hint");
+  var statusEl = document.getElementById("stack-status");
+  var openOrder = [];
+  var openerByNote = {};
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function templateFor(id) {
+    return document.getElementById("note-" + id);
+  }
+
+  function noteTitle(id) {
+    var tpl = templateFor(id);
+    return (tpl && tpl.getAttribute("data-title")) || id;
+  }
+
+  function shortTitle(id) {
+    if (id === ROOT) return "Hub";
+    var t = noteTitle(id);
+    var cut = t.split("·")[0].trim();
+    return cut || t;
+  }
+
+  function announceOpen(id) {
+    if (!statusEl) return;
+    var label = shortTitle(id);
+    statusEl.textContent = "";
+    requestAnimationFrame(function () {
+      statusEl.textContent = label + " opened.";
+    });
+  }
+
+  function updateTrail() {
+    if (!trailEl) return;
+    if (openOrder.length <= 1) {
+      trailEl.hidden = true;
+      trailEl.textContent = "";
+      return;
+    }
+    trailEl.hidden = false;
+    trailEl.textContent = openOrder.map(shortTitle).join(" / ");
+  }
+
+  function syncChrome() {
+    var top = openOrder.length ? openOrder[openOrder.length - 1] : null;
+    document.querySelectorAll(".index-btn[data-open], .rail-key[data-open]").forEach(function (el) {
+      var id = el.getAttribute("data-open");
+      var open = openOrder.indexOf(id) !== -1;
+      el.classList.toggle("is-open", open);
+      el.classList.toggle("is-top", id === top);
+      if (id === top) {
+        el.setAttribute("aria-current", "true");
+      } else {
+        el.removeAttribute("aria-current");
+      }
+    });
+    updateTrail();
+    if (hintEl) {
+      hintEl.hidden = openOrder.length > 1;
+    }
+  }
+
+  function focusPane(id) {
+    var pane = stackEl.querySelector('.pane[data-note-id="' + id + '"]');
+    if (!pane) return;
+    /* snap into view — never smooth (would chain with pane-in) */
+    pane.scrollIntoView({ behavior: "auto", inline: "nearest", block: "nearest" });
+    var h2 = pane.querySelector(".pane-head h2");
+    var target = h2 || pane;
+    if (h2) h2.tabIndex = -1;
+    try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+  }
+
+  function closeTop() {
+    if (openOrder.length <= 1) return;
+    var id = openOrder[openOrder.length - 1];
+    if (id === ROOT) return;
+    closeNote(id);
+  }
+
+  function closeNote(id, opts) {
+    opts = opts || {};
+    if (id === ROOT) return;
+    var idx = openOrder.indexOf(id);
+    if (idx === -1) return;
+    openOrder.splice(idx, 1);
+    var pane = stackEl.querySelector('.pane[data-note-id="' + id + '"]');
+    if (pane) pane.remove();
+    var opener = openerByNote[id] || null;
+    delete openerByNote[id];
+    syncChrome();
+    if (opts.silent) return;
+    /* Esc / close: return focus to opener (rail/index), else new top pane */
+    if (opener && document.contains(opener)) {
+      try { opener.focus({ preventScroll: true }); } catch (e) { opener.focus(); }
+    } else {
+      var top = openOrder[openOrder.length - 1];
+      if (top) focusPane(top);
+    }
+  }
+
+  function pushNote(id) {
+    if (!templateFor(id)) return;
+    var existing = openOrder.indexOf(id);
+    if (existing !== -1) {
+      // Move to top of stack (rightmost)
+      openOrder.splice(existing, 1);
+      openOrder.push(id);
+      var pane = stackEl.querySelector('.pane[data-note-id="' + id + '"]');
+      if (pane) stackEl.appendChild(pane);
+      while (openOrder.length > MAX_VISIBLE) {
+        var drop = openOrder[0] === ROOT && openOrder.length > 1 ? openOrder[1] : openOrder[0];
+        if (drop === ROOT && openOrder.length === 1) break;
+        if (drop === ROOT) {
+          // keep hub; drop next oldest non-root if possible
+          var found = -1;
+          for (var i = 0; i < openOrder.length - 1; i++) {
+            if (openOrder[i] !== ROOT) { found = i; break; }
+          }
+          if (found === -1) break;
+          drop = openOrder[found];
+        }
+        closeNote(drop, { silent: true });
+      }
+      syncChrome();
+      announceOpen(id);
+      focusPane(id);
+      return;
+    }
+    openOrder.push(id);
+    while (openOrder.length > MAX_VISIBLE) {
+      var drop2 = null;
+      for (var j = 0; j < openOrder.length - 1; j++) {
+        if (openOrder[j] !== ROOT) { drop2 = openOrder[j]; break; }
+      }
+      if (!drop2) break;
+      closeNote(drop2, { silent: true });
+    }
+    var tpl = templateFor(id);
+    var title = tpl.getAttribute("data-title") || id;
+    var wide = tpl.getAttribute("data-wide") === "1";
+    var pane = document.createElement("article");
+    pane.className = "pane" + (wide ? " is-wide" : "") + (id === ROOT ? " is-root" : "");
+    pane.setAttribute("data-note-id", id);
+    pane.setAttribute("role", "region");
+    pane.setAttribute("aria-label", title);
+    pane.tabIndex = -1;
+
+    var head = document.createElement("div");
+    head.className = "pane-head";
+    var h2 = document.createElement("h2");
+    h2.textContent = title;
+    h2.tabIndex = -1;
+    head.appendChild(h2);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "pane-close";
+    btn.setAttribute("aria-label", "Close note: " + title);
+    btn.textContent = "×";
+    if (id === ROOT) {
+      btn.hidden = true;
+      btn.disabled = true;
+    } else {
+      btn.addEventListener("click", function () { closeNote(id); });
+    }
+    head.appendChild(btn);
+    pane.appendChild(head);
+
+    var body = document.createElement("div");
+    body.className = "pane-body";
+    body.appendChild(tpl.content.cloneNode(true));
+    pane.appendChild(body);
+    stackEl.appendChild(pane);
+    syncChrome();
+    announceOpen(id);
+    focusPane(id);
+  }
+
+  function onOpenClick(ev) {
+    var t = ev.target.closest("[data-open]");
+    if (!t || !stackEl.contains(t) && !t.closest(".index") && !t.closest(".rail") && !t.closest(".pane")) {
+      // allow index/rail/pane
+    }
+    if (!t) return;
+    var id = t.getAttribute("data-open");
+    if (!id) return;
+    ev.preventDefault();
+    pushNote(id);
+  }
+
+  document.addEventListener("click", function (ev) {
+    var t = ev.target.closest("[data-open]");
+    if (!t) return;
+    ev.preventDefault();
+    var id = t.getAttribute("data-open");
+    if (t.closest(".index") || t.closest(".rail") || t.closest(".pane")) {
+      openerByNote[id] = t;
+    }
+    pushNote(id);
+  });
+
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") {
+      closeTop();
+    }
+  });
+
+  // Boot: hub, optional ?stack=hub,heat,speech
+  var params = new URLSearchParams(window.location.search);
+  var stackParam = params.get("stack");
+  if (stackParam) {
+    var ids = stackParam.split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+    if (ids.indexOf(ROOT) === -1) ids.unshift(ROOT);
+    ids.forEach(function (id) { pushNote(id); });
+  } else {
+    pushNote(ROOT);
+  }
+})();
+</script>
+<!-- rates: {&quot;first&quot;:{&quot;heat&quot;:{&quot;pct&quot;:70,&quot;agree&quot;:14,&quot;total&quot;:20},&quot;toxic_masculinity&quot;:{&quot;pct&quot;:80,&quot;agree&quot;:16,&quot;total&quot;:20},&quot;bad_faith&quot;:{&quot;pct&quot;:95,&quot;agree&quot;:19,&quot;total&quot;:20},&quot;hindsight_mockery&quot;:{&quot;pct&quot;:92,&quot;agree&quot;:12,&quot;total&quot;:13},&quot;claim_shape&quot;:{&quot;pct&quot;:80,&quot;agree&quot;:16,&quot;total&quot;:20}},&quot;final_live&quot;:{&quot;heat&quot;:{&quot;pct&quot;:100,&quot;agree&quot;:20,&quot;total&quot;:20},&quot;toxic_masculinity&quot;:{&quot;pct&quot;:100,&quot;agree&quot;:20,&quot;total&quot;:20},&quot;bad_faith&quot;:{&quot;pct&quot;:100,&quot;agree&quot;:20,&quot;total&quot;:20},&quot;hindsight_mockery&quot;:{&quot;pct&quot;:100,&quot;agree&quot;:13,&quot;total&quot;:13},&quot;claim_shape&quot;:{&quot;pct&quot;:90,&quot;agree&quot;:18,&quot;total&quot;:20}},&quot;final_offline_claim_shape&quot;:&quot;19/20&quot;,&quot;sources&quot;:[&quot;stage_a_run_20260925-114858_summary.json&quot;,&quot;stage_a_run_20260925-115625_summary.json&quot;,&quot;frozen_posts.json&quot;]} -->
+</body>
+</html>
