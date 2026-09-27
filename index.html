@@ -3,26 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#F3EEE3">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#16140F">
 <title>Stage A lesson: teaching a machine to spot reckless dunks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
 <style>
   :root {
-    --bone: #F3EEE3;
-    --iron: #1A1A1A;
-    --slate: #6B6B6B;
-    --ash: #B7B7B7;
-    --rubric: #C23A2A;
-    --paper: var(--bone);
-    --ink: var(--iron);
+    /* Dark-default Read mode — bone/iron stay absolute light/dark swatches;
+       paper/ink flip for page surfaces. Scorecard thead keeps bone raised. */
+    --bone: #EDE8DE;
+    --iron: #12100E;
+    --slate: #A8A29A;
+    --ash: #7A756C;
+    --rubric: #E25545;
+    --paper: #16140F;
+    --ink: #EDE8DE;
     --muted: var(--slate);
     --faint: var(--ash);
     --mark: var(--rubric);
-    --line: color-mix(in srgb, var(--iron) 18%, transparent);
-    --line-strong: color-mix(in srgb, var(--iron) 32%, transparent);
+    --line: color-mix(in srgb, var(--ink) 16%, transparent);
+    --line-strong: color-mix(in srgb, var(--ink) 30%, transparent);
     --measure: 38ch;
     --rail-w: 2.5rem;
     --index-w: 11.5rem;
@@ -34,7 +36,7 @@
   }
   * { box-sizing: border-box; }
   html {
-    color-scheme: light;
+    color-scheme: dark;
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -54,8 +56,8 @@
     overflow: hidden;
   }
   ::selection {
-    background: color-mix(in srgb, var(--rubric) 28%, var(--bone));
-    color: var(--iron);
+    background: color-mix(in srgb, var(--rubric) 40%, var(--paper));
+    color: var(--ink);
   }
   a {
     color: var(--rubric);
@@ -676,7 +678,7 @@
     .index {
       border-right: 0;
       border-bottom: 1px solid var(--line-strong);
-      max-height: none;
+      max-height: none; /* SA-10: no nested scroll pocket on phone */
       overflow-y: visible;
     }
     .index-list {
