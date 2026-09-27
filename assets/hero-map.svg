@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 200" width="100%" height="auto" role="img" aria-labelledby="title desc">
+  <title id="title">Hero map: Loud dunk to Find the claim to Human writes pushback</title>
+  <desc id="desc">Three-step flow. Machine finds the claim; a person decides and writes the pushback.</desc>
+  <style>
+  .xd-bg { fill: #16140F; }
+  .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+  .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+  .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+  .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+  .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+  .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+  .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+  .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+  .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+  .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+</style>
+  <rect class="xd-bg" x="0" y="0" width="680" height="200" rx="8"/>
+
+  <!-- Box 1: Loud dunk -->
+  <g transform="rotate(-1 120 85)">
+    <rect class="xd-box-fill" x="36" y="48" width="168" height="74" rx="10"/>
+    <path class="xd-box" d="M56 72 l18 -10 v32 l-18 -10 z"/>
+    <path class="xd-dash" d="M74 68 q10 -8 10 8 q0 16 -10 8"/>
+    <text class="xd-label" x="128" y="94" text-anchor="middle">Loud dunk</text>
+  </g>
+
+  <path class="xd-dash" d="M214 85 L258 85"/>
+  <path class="xd-box" d="M252 78 L268 85 L252 92"/>
+
+  <!-- Box 2: Find the claim -->
+  <g>
+    <rect class="xd-box-fill" x="276" y="48" width="168" height="74" rx="9"/>
+    <circle class="xd-box" cx="302" cy="78" r="11"/>
+    <path class="xd-box" d="M310 86 L320 96"/>
+    <text class="xd-label" x="368" y="94" text-anchor="middle">Find the claim</text>
+  </g>
+
+  <path class="xd-dash" d="M452 85 L496 85"/>
+  <path class="xd-box" d="M490 78 L506 85 L490 92"/>
+
+  <!-- Box 3: Human writes pushback -->
+  <g transform="rotate(1 580 85)">
+    <rect class="xd-box-fill" x="512" y="48" width="148" height="74" rx="11"/>
+    <circle class="xd-box" cx="540" cy="72" r="8"/>
+    <path class="xd-box" d="M526 100 q14 -16 28 0"/>
+    <text class="xd-label" x="600" y="78" text-anchor="middle" font-size="13">Human writes</text>
+    <text class="xd-label" x="600" y="98" text-anchor="middle" font-size="13">pushback</text>
+  </g>
+
+  <text class="xd-caption" x="340" y="170" text-anchor="middle">Machine finds. Person decides.</text>
+
+</svg>

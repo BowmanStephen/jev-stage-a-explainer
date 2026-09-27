@@ -1,0 +1,72 @@
+/* Claim-loop explainer v2 — shared Excalidraw-feel diagram styles
+   Dark high-contrast tokens. Embed with class="xd-fig" figures. */
+
+:root {
+  --xd-paper: #16140F;
+  --xd-ink: #EDE8DE;
+  --xd-muted: #A8A29A;
+  --xd-rubric: #E25545; /* FAIL / accent — do not soften */
+  --xd-pass: #6FBF8A;   /* calm pass green, ≥3:1 on paper */
+  --xd-stroke: 2.2px;
+  --xd-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Figure wrapper for drop-in embeds */
+figure.xd-fig {
+  margin: 1.25rem 0 1.75rem;
+  padding: 0.75rem 0.85rem 0.5rem;
+  background: var(--xd-paper);
+  border: 1px solid color-mix(in srgb, var(--xd-ink) 18%, transparent);
+  border-radius: 12px;
+  color: var(--xd-ink);
+  font-family: var(--xd-font);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+figure.xd-fig > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+figure.xd-fig > figcaption {
+  margin: 0.55rem 0.25rem 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--xd-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Optional: hide SVG-internal caption if figcaption is shown */
+figure.xd-fig[data-caption-source="figcaption"] svg .xd-caption {
+  display: none;
+}
+
+/* Slot attribute helpers (Writing narrative DIAGRAM SLOT ids) */
+figure.xd-fig[data-diagram="hero-map"],
+figure.xd-fig[data-diagram="jev-one-breath"],
+figure.xd-fig[data-diagram="two-labs"],
+figure.xd-fig[data-diagram="claim-loop-flow"],
+figure.xd-fig[data-diagram="scorecard-bars"] {
+  /* identity only — styling is shared */
+}
+
+/* Mobile: keep labels readable (~12px floor) */
+@media (max-width: 520px) {
+  figure.xd-fig {
+    padding: 0.5rem 0.4rem 0.35rem;
+    border-radius: 10px;
+  }
+  figure.xd-fig > figcaption {
+    font-size: 0.85rem;
+  }
+}
+
+/* Utility: FAIL stamp never muted */
+.xd-fail-emphasis {
+  color: var(--xd-rubric);
+  font-weight: 700;
+}

@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#16140F">
-<title>Stage A lesson: teaching a machine to spot reckless dunks</title>
+<title>Jev: claim-loop story and Stage A warm-up</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/diagrams.css">
 <style>
   :root {
     /* Dark-default Read mode — bone/iron stay absolute light/dark swatches;
@@ -619,6 +620,11 @@
     background: color-mix(in srgb, var(--rubric) 14%, var(--paper));
     box-shadow: inset 2px 0 0 0 var(--rubric);
   }
+  .num-fail {
+    color: var(--rubric);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
   .skip {
     color: var(--slate);
     font-family: var(--font-ui);
@@ -724,14 +730,34 @@
 <body>
 <a class="skip-link" href="#stack">Skip to notes</a>
 <div class="workspace">
-  <nav class="index" aria-label="Lesson notes">
-    <p class="edition">Stage A · notes</p>
-    <ul class="index-list">
-      <li><button type="button" class="index-btn" data-open="hub">Hub</button></li>
-      <li><button type="button" class="index-btn" data-open="what-this-is">What this is</button></li>
-      <li><button type="button" class="index-btn" data-open="what-jev-is">What Jev is</button></li>
-      <li><button type="button" class="index-btn" data-open="caleb">Caleb project</button></li>
-    </ul>
+  <nav class="index" aria-label="Notes">
+    <p class="edition">Jev · notes</p>
+    <div class="index-group" style="margin-top:0">
+      <p class="index-group-label">Claim-loop</p>
+      <ul class="index-list">
+        <li><button type="button" class="index-btn" data-open="page">What is this page?</button></li>
+        <li><button type="button" class="index-btn" data-open="one-breath">Jev in one breath</button></li>
+        <li><button type="button" class="index-btn" data-open="two-labs">Two labs</button></li>
+        <li><button type="button" class="index-btn" data-open="how">How it works</button></li>
+        <li><button type="button" class="index-btn" data-open="tested">What we tested</button></li>
+        <li><button type="button" class="index-btn" data-open="honest">Honest scorecard</button></li>
+        <li><button type="button" class="index-btn" data-open="worked">What worked</button></li>
+        <li><button type="button" class="index-btn" data-open="failed">What failed</button></li>
+        <li><button type="button" class="index-btn" data-open="example">Tiny example</button></li>
+        <li><button type="button" class="index-btn" data-open="not-this">What this is not</button></li>
+        <li><button type="button" class="index-btn" data-open="next">What happens next</button></li>
+        <li><button type="button" class="index-btn" data-open="builders">For builders</button></li>
+      </ul>
+    </div>
+    <div class="index-group">
+      <p class="index-group-label">Stage A warm-up</p>
+      <ul class="index-list">
+        <li><button type="button" class="index-btn" data-open="hub">Hub</button></li>
+        <li><button type="button" class="index-btn" data-open="what-this-is">What this is</button></li>
+        <li><button type="button" class="index-btn" data-open="what-jev-is">What Jev is</button></li>
+        <li><button type="button" class="index-btn" data-open="caleb">Caleb project</button></li>
+      </ul>
+    </div>
     <div class="index-group">
       <p class="index-group-label">Five grades</p>
       <ul class="index-list">
@@ -750,12 +776,6 @@
       <li><button type="button" class="index-btn" data-open="all-20">All 20 posts</button></li>
       <li><button type="button" class="index-btn" data-open="files">Files</button></li>
     </ul>
-    <div class="index-group">
-      <p class="index-group-label">Other test</p>
-      <ul class="index-list">
-        <li><button type="button" class="index-btn" data-open="claim-loop">Claim-loop</button></li>
-      </ul>
-    </div>
   </nav>
 
   <aside class="rail" aria-label="Grade shortcuts">
@@ -783,6 +803,7 @@
     <p class="lead">This is a short lesson you can read aloud. It explains what we built in Stage A of Stephen’s Caleb Williams fact-check work, why we used a specialized scorer instead of a chatty essay model, and what the numbers actually mean.</p>
     <p class="muted">Open linked notes into the stack — associative, not one long forced chapter. Full table of contents lives in the index.</p>
     <ul class="hub-links">
+      <li><a href="#" data-open="page">What is this page?</a> <span class="muted">· claim-loop story</span></li>
       <li><a href="#" data-open="what-this-is">What this is</a></li>
       <li><a href="#" data-open="scorecard">Final scorecard</a></li>
       <li><a href="#" data-open="walkthrough">Walkthrough (Acho tw-001)</a></li>
@@ -794,6 +815,7 @@
     <p>Stage A was a controlled test. We took twenty public posts and clips about Caleb Williams, scored each one by hand on five fixed questions, asked a specialized model named <a href="#" data-open="what-jev-is">Jev</a> to score the same posts, compared the answers, rewrote the grading rules until the scores lined up, and stopped.</p>
     <p class="muted">The point was not to publish a leaderboard. The point was to prove we can triage nasty or bad-faith dunks for a human to review later.</p>
     <p>See also: <a href="#" data-open="caleb">Caleb project</a>, <a href="#" data-open="heat">five grades</a>, <a href="#" data-open="what-we-did">what we did</a>, <a href="#" data-open="scorecard">scorecard</a>.</p>
+    <p>Stage A is the warm-up. The product test is the <a href="#" data-open="two-labs">claim-loop</a>.</p>
   </template>
 
   <template id="note-what-jev-is" data-title="What Jev is" data-wide="0">
@@ -1169,73 +1191,535 @@
     </div>
   </template>
 
-  <template id="note-claim-loop" data-title="Claim-loop experiment" data-wide="0">
-    <p>This is a separate experiment from the Stage A lesson. Twelve posts. Three questions. The job was to pull a checkable claim out of a dunk, and to send a person only the posts that need a check.</p>
-    <p><strong>Claim-pull</strong> means the model pulled the claim. On a post that should contain a real claim, it counts only when the model marks that a claim is there and writes down roughly the same claim a person would. Wording can differ. The core has to match. Eight posts were in that set. The bar was at least 7 of 8.</p>
-    <p><strong>False-yes</strong> is a wasted yes. A control post — a pure insult, a meme, or praise — gets sent to a person as if it needed a fact-check. Four posts were in that set. The bar was at most 1 of 4.</p>
-    <p class="exhibit-label">Three bars</p>
-    <div class="table-wrap" role="region" aria-label="Claim-loop bars" tabindex="0">
+  <template id="note-page" data-title="What is this page?" data-wide="1">
+    <h1>What is this page?</h1>
+    <p>We built a tiny helper that spots rough public dunks about Caleb Williams.</p>
+    <p>It does <strong>not</strong> yell back on the internet by itself.</p>
+    <p>It finds a claim, wakes a human, and helps that human write a sourced pushback.</p>
+    <p>This page tells that story in plain words.</p>
+        <figure class="xd-fig" data-diagram="hero-map" data-caption-source="figcaption" aria-label="Hero map: Loud dunk, find the claim, human writes pushback">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 200" width="100%" height="auto" role="img" aria-labelledby="hero-map-title hero-map-desc">
+        <title id="hero-map-title">Hero map: Loud dunk to Find the claim to Human writes pushback</title>
+        <desc id="hero-map-desc">Three-step flow. Machine finds the claim; a person decides and writes the pushback.</desc>
+        <style>
+        .xd-bg { fill: #16140F; }
+        .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+        .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+        .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+        .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+        .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+        .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+      </style>
+        <rect class="xd-bg" x="0" y="0" width="680" height="200" rx="8"/>
+
+        <!-- Box 1: Loud dunk -->
+        <g transform="rotate(-1 120 85)">
+          <rect class="xd-box-fill" x="36" y="48" width="168" height="74" rx="10"/>
+          <path class="xd-box" d="M56 72 l18 -10 v32 l-18 -10 z"/>
+          <path class="xd-dash" d="M74 68 q10 -8 10 8 q0 16 -10 8"/>
+          <text class="xd-label" x="128" y="94" text-anchor="middle">Loud dunk</text>
+        </g>
+
+        <path class="xd-dash" d="M214 85 L258 85"/>
+        <path class="xd-box" d="M252 78 L268 85 L252 92"/>
+
+        <!-- Box 2: Find the claim -->
+        <g>
+          <rect class="xd-box-fill" x="276" y="48" width="168" height="74" rx="9"/>
+          <circle class="xd-box" cx="302" cy="78" r="11"/>
+          <path class="xd-box" d="M310 86 L320 96"/>
+          <text class="xd-label" x="368" y="94" text-anchor="middle">Find the claim</text>
+        </g>
+
+        <path class="xd-dash" d="M452 85 L496 85"/>
+        <path class="xd-box" d="M490 78 L506 85 L490 92"/>
+
+        <!-- Box 3: Human writes pushback -->
+        <g transform="rotate(1 580 85)">
+          <rect class="xd-box-fill" x="512" y="48" width="148" height="74" rx="11"/>
+          <circle class="xd-box" cx="540" cy="72" r="8"/>
+          <path class="xd-box" d="M526 100 q14 -16 28 0"/>
+          <text class="xd-label" x="600" y="78" text-anchor="middle" font-size="13">Human writes</text>
+          <text class="xd-label" x="600" y="98" text-anchor="middle" font-size="13">pushback</text>
+        </g>
+
+        <text class="xd-caption" x="340" y="170" text-anchor="middle">Machine finds. Person decides.</text>
+
+      </svg>
+      <figcaption>Machine finds. Person decides.</figcaption>
+    </figure>
+    <p class="faint">Next: <a href="#" data-open="one-breath">Jev in one breath</a> · Warm-up lesson: <a href="#" data-open="hub">Stage A</a></p>
+  </template>
+
+  <template id="note-one-breath" data-title="Jev in one breath" data-wide="1">
+    <p><strong>Jev</strong> is a scoring model.</p>
+    <p>You feed it a short post.</p>
+    <p>It answers fixed questions.</p>
+    <p>It does <strong>not</strong> write a long chatty essay.</p>
+    <p>Think checklist, not debate club.</p>
+        <figure class="xd-fig" data-diagram="jev-one-breath" data-caption-source="figcaption" aria-label="Jev in one breath: crossed-out essay bubble versus circled checklist">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 220" width="100%" height="auto" role="img" aria-labelledby="jev-one-breath-title jev-one-breath-desc">
+        <title id="jev-one-breath-title">Jev in one breath: scorer not essay bot</title>
+        <desc id="jev-one-breath-desc">Left: chat bubble saying let me explain crossed out. Right: clipboard with checkboxes circled. Caption: Scorer, not essay bot.</desc>
+        <style>
+        .xd-bg { fill: #16140F; }
+        .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+        .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+        .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+        .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+        .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+        .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+      </style>
+        <rect class="xd-bg" x="0" y="0" width="560" height="220" rx="8"/>
+
+        <!-- Left: crossed-out chat bubble -->
+        <g>
+          <text class="xd-small" x="130" y="32" text-anchor="middle">Essay bot</text>
+          <!-- bubble -->
+          <path class="xd-box-fill" d="M40 48
+            h180 a12 12 0 0 1 12 12
+            v70 a12 12 0 0 1 -12 12
+            h-100 l-18 22 -4 -22 h-58
+            a12 12 0 0 1 -12 -12 v-70 a12 12 0 0 1 12 -12 z"/>
+          <text class="xd-muted" x="130" y="100" text-anchor="middle" font-size="15" font-style="italic">"let me explain…"</text>
+          <!-- big X -->
+          <path class="xd-stroke-rubric" stroke-width="3.2" d="M70 60 L200 150"/>
+          <path class="xd-stroke-rubric" stroke-width="3.2" d="M200 60 L70 150"/>
+        </g>
+
+        <!-- vs -->
+        <text class="xd-muted" x="280" y="110" text-anchor="middle" font-size="14" font-weight="700">vs</text>
+
+        <!-- Right: clipboard with checkboxes -->
+        <g transform="rotate(-0.8 420 110)">
+          <text class="xd-small" x="420" y="32" text-anchor="middle">Checklist</text>
+          <!-- clipboard body -->
+          <rect class="xd-box-fill" x="330" y="48" width="180" height="120" rx="8"/>
+          <!-- clip top -->
+          <rect class="xd-box-fill" x="380" y="40" width="80" height="18" rx="5"/>
+          <!-- checkboxes -->
+          <rect class="xd-box" x="350" y="72" width="16" height="16" rx="3"/>
+          <path class="xd-stroke-pass" stroke-width="2.4" d="M353 80 L357 84 L363 74"/>
+          <text class="xd-label" x="376" y="85" font-size="13">speech type?</text>
+
+          <rect class="xd-box" x="350" y="100" width="16" height="16" rx="3"/>
+          <path class="xd-stroke-pass" stroke-width="2.4" d="M353 108 L357 112 L363 102"/>
+          <text class="xd-label" x="376" y="113" font-size="13">claim in 1 line?</text>
+
+          <rect class="xd-box" x="350" y="128" width="16" height="16" rx="3"/>
+          <path class="xd-stroke-pass" stroke-width="2.4" d="M353 136 L357 140 L363 130"/>
+          <text class="xd-label" x="376" y="141" font-size="13">wake a human?</text>
+
+          <!-- circle around checklist -->
+          <ellipse class="xd-stroke-pass" cx="420" cy="112" rx="98" ry="68" stroke-dasharray="5 4" opacity="0.9"/>
+        </g>
+
+        <text class="xd-caption" x="280" y="200" text-anchor="middle">Scorer, not essay bot</text>
+
+      </svg>
+      <figcaption>Scorer, not essay bot</figcaption>
+    </figure>
+    <p class="muted">Same idea, five tone grades: <a href="#" data-open="what-jev-is">what Jev is</a> in the Stage A warm-up.</p>
+    <p class="faint">Next: <a href="#" data-open="two-labs">Two labs</a></p>
+  </template>
+
+  <template id="note-two-labs" data-title="Two labs" data-wide="1">
+    <p class="exhibit-label">Stage A = warm-up</p>
+    <p>Stage A was practice.</p>
+    <p>We took <strong>20</strong> fixed posts.</p>
+    <p>Humans scored tone by hand (how loud, how gendered, joke vs insult, and so on).</p>
+    <p>Then Jev scored the same posts.</p>
+    <p>We rewrote the grading rules until the tone scores lined up.</p>
+    <p><strong>Job of Stage A:</strong> learn the <em>vibe</em> of a dunk.</p>
+    <p>Not the full product yet.</p>
+    <p class="exhibit-label">Claim-loop = the real product test</p>
+    <p>The claim-loop asks the money question:</p>
+    <ol class="steps">
+      <li>Can Jev find the <strong>checkable claim</strong> inside a dunk?</li>
+      <li>Can it wake a human only when that helps?</li>
+      <li>Can that human write a <strong>sourced</strong> pushback (receipts, not vibes)?</li>
+    </ol>
+        <figure class="xd-fig" data-diagram="two-labs" data-caption-source="figcaption" aria-label="Two labs: Stage A warm-up versus Claim-loop product test">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" width="100%" height="auto" role="img" aria-labelledby="two-labs-title two-labs-desc">
+        <title id="two-labs-title">Two labs: Stage A warm-up versus Claim-loop product test</title>
+        <desc id="two-labs-desc">Left panel Stage A warm-up with tone and volume. Right panel Claim-loop product test with magnify claim and human. Caption: Tone practice vs claim to human to pushback.</desc>
+        <style>
+        .xd-bg { fill: #16140F; }
+        .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+        .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+        .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+        .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+        .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+        .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+      </style>
+        <rect class="xd-bg" x="0" y="0" width="640" height="240" rx="8"/>
+
+        <!-- Left panel: Stage A -->
+        <g>
+          <rect class="xd-box-fill" x="24" y="28" width="280" height="160" rx="12"/>
+          <text class="xd-label" x="164" y="56" text-anchor="middle" font-size="15">Stage A — warm-up</text>
+          <!-- volume / thermometer -->
+          <g transform="translate(70, 80)">
+            <!-- thermometer -->
+            <rect class="xd-box" x="0" y="0" width="14" height="56" rx="7"/>
+            <circle class="xd-box" cx="7" cy="62" r="12"/>
+            <rect fill="#E25545" x="4" y="30" width="6" height="32" rx="3"/>
+            <circle fill="#E25545" cx="7" cy="62" r="7"/>
+          </g>
+          <!-- volume knob -->
+          <g transform="translate(130, 95)">
+            <circle class="xd-box" cx="24" cy="24" r="22"/>
+            <path class="xd-box" d="M24 24 L24 8"/>
+            <path class="xd-dash" d="M4 24 A20 20 0 0 1 44 24" stroke-width="1.4"/>
+          </g>
+          <text class="xd-small" x="164" y="160" text-anchor="middle">tone · volume · vibe</text>
+        </g>
+
+        <!-- divider -->
+        <path class="xd-dash" d="M320 40 L320 180"/>
+
+        <!-- Right panel: Claim-loop -->
+        <g transform="rotate(0.6 480 108)">
+          <rect class="xd-box-fill" x="340" y="28" width="280" height="160" rx="10"/>
+          <text class="xd-label" x="480" y="56" text-anchor="middle" font-size="15">Claim-loop — product test</text>
+          <!-- magnify over quote -->
+          <g transform="translate(380, 78)">
+            <rect class="xd-box" x="0" y="8" width="70" height="36" rx="4"/>
+            <text class="xd-muted" x="35" y="32" text-anchor="middle" font-size="11">"claim…"</text>
+            <circle class="xd-box" cx="78" cy="20" r="14"/>
+            <path class="xd-box" d="M88 30 L100 42"/>
+          </g>
+          <!-- person -->
+          <g transform="translate(510, 78)">
+            <circle class="xd-box" cx="20" cy="14" r="10"/>
+            <path class="xd-box" d="M4 48 q16 -22 32 0"/>
+            <text class="xd-small" x="20" y="64" text-anchor="middle">human</text>
+          </g>
+          <text class="xd-small" x="480" y="168" text-anchor="middle">claim → human → pushback</text>
+        </g>
+
+        <text class="xd-caption" x="320" y="220" text-anchor="middle">Tone practice vs claim → human → pushback</text>
+
+      </svg>
+      <figcaption>Tone practice vs claim → human → pushback</figcaption>
+    </figure>
+    <p>Tone rates and the five grades stay on the <a href="#" data-open="hub">Stage A</a> warm-up. They are a different test.</p>
+    <p class="faint">Next: <a href="#" data-open="how">How the claim-loop works</a></p>
+  </template>
+
+  <template id="note-how" data-title="How the claim-loop works" data-wide="1">
+    <p>A rough post shows up.</p>
+    <p>Jev tries three things:</p>
+    <ol class="steps">
+      <li><strong>What kind of speech is this?</strong> (insult, fact, mix, joke, defense…)</li>
+      <li><strong>What is the checkable claim in one line?</strong></li>
+      <li><strong>Should a human fact-check it?</strong></li>
+    </ol>
+    <p>If yes, a human writes a short pushback with sources.</p>
+    <p>Nobody auto-posts. A person still hits send (or doesn’t).</p>
+        <figure class="xd-fig" data-diagram="claim-loop-flow" data-caption-source="figcaption" aria-label="Claim-loop flow: post, three questions, yes to human draft or no skip">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="100%" height="auto" role="img" aria-labelledby="claim-loop-flow-title claim-loop-flow-desc">
+        <title id="claim-loop-flow-title">Claim-loop flow: Post to three questions to yes human draft or no skip</title>
+        <desc id="claim-loop-flow-desc">Horizontal triage flow. Post, three questions, yes path to human with receipts and draft pushback, no path to skip. Caption: Triage for a human. Not a harassment bot.</desc>
+        <style>
+        .xd-bg { fill: #16140F; }
+        .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+        .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+        .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+        .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+        .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+        .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+      </style>
+        <rect class="xd-bg" x="0" y="0" width="720" height="260" rx="8"/>
+
+        <!-- Post -->
+        <g>
+          <rect class="xd-box-fill" x="16" y="70" width="88" height="56" rx="9"/>
+          <text class="xd-label" x="60" y="104" text-anchor="middle">Post</text>
+        </g>
+        <path class="xd-dash" d="M108 98 L138 98"/>
+        <path class="xd-box" d="M132 91 L148 98 L132 105" fill="none"/>
+
+        <!-- 3 questions -->
+        <g>
+          <rect class="xd-box-fill" x="152" y="58" width="120" height="80" rx="10"/>
+          <text class="xd-label" x="212" y="88" text-anchor="middle" font-size="13">3 questions</text>
+          <text class="xd-small" x="212" y="108" text-anchor="middle">type · claim · wake?</text>
+        </g>
+        <path class="xd-dash" d="M276 98 L306 98"/>
+        <path class="xd-box" d="M300 91 L316 98 L300 105" fill="none"/>
+
+        <!-- yes? diamond-ish box -->
+        <g transform="rotate(-1 360 98)">
+          <rect class="xd-box-fill" x="324" y="70" width="72" height="56" rx="8"/>
+          <text class="xd-label" x="360" y="104" text-anchor="middle">yes?</text>
+        </g>
+
+        <!-- yes branch → -->
+        <path class="xd-dash" d="M400 98 L440 98"/>
+        <path class="xd-box" d="M434 91 L450 98 L434 105" fill="none"/>
+        <text class="xd-pass" x="420" y="88" text-anchor="middle" font-size="11" font-weight="700">yes</text>
+
+        <!-- Human + receipts -->
+        <g>
+          <rect class="xd-box-fill" x="456" y="58" width="120" height="80" rx="10"/>
+          <text class="xd-label" x="516" y="88" text-anchor="middle" font-size="13">Human</text>
+          <text class="xd-label" x="516" y="108" text-anchor="middle" font-size="13">+ receipts</text>
+        </g>
+        <path class="xd-dash" d="M580 98 L610 98"/>
+        <path class="xd-box" d="M604 91 L620 98 L604 105" fill="none"/>
+
+        <!-- Draft pushback -->
+        <g transform="rotate(0.7 670 98)">
+          <rect class="xd-box-fill" x="626" y="70" width="80" height="56" rx="9"/>
+          <text class="xd-label" x="666" y="96" text-anchor="middle" font-size="12">Draft</text>
+          <text class="xd-label" x="666" y="112" text-anchor="middle" font-size="12">pushback</text>
+        </g>
+
+        <!-- no branch down -->
+        <path class="xd-dash" d="M360 130 L360 178"/>
+        <path class="xd-box" d="M353 172 L360 188 L367 172" fill="none"/>
+        <text class="xd-muted" x="376" y="160" font-size="11" font-weight="700">no</text>
+
+        <!-- Skip -->
+        <g>
+          <rect class="xd-box-fill" x="316" y="196" width="88" height="40" rx="8"/>
+          <text class="xd-muted" x="360" y="222" text-anchor="middle" font-size="14" font-weight="600">Skip</text>
+        </g>
+
+        <text class="xd-caption" x="360" y="252" text-anchor="middle">Triage for a human. Not a harassment bot.</text>
+
+      </svg>
+      <figcaption>Triage for a human. Not a harassment bot.</figcaption>
+    </figure>
+    <p class="faint">Next: <a href="#" data-open="tested">What we tested</a></p>
+  </template>
+
+  <template id="note-tested" data-title="What we tested" data-wide="0">
+    <p><strong>When:</strong> Sep 26, 2026 (CT)</p>
+    <p><strong>Cost:</strong> about <strong>$0.00123</strong></p>
+    <p><strong>Pack:</strong> <strong>12</strong> posts</p>
+    <ul>
+      <li><strong>8</strong> should wake a human (real claim inside the dunk)</li>
+      <li><strong>4</strong> controls should <strong>not</strong> (pure insult, meme, or defender praise)</li>
+    </ul>
+    <p class="score-meta">about $0.00123 · <span class="mono">typesafe/jev-1.13-20260917</span> on kind-of-post and worth-a-look · claim line via <span class="mono">gpt-4o-mini</span> workaround · run <span class="mono">claim-loop-run-20260926-235043</span></p>
+    <p>Numbers for the three bars are on the <a href="#" data-open="honest">honest scorecard</a>. They come from <span class="mono">SCORECARD_M2.md</span>. We did not invent them.</p>
+    <p class="faint">Next: <a href="#" data-open="honest">Honest scorecard</a></p>
+  </template>
+
+  <template id="note-honest" data-title="Honest scorecard" data-wide="1">
+    <p>We set three bars. Fail any one → the loop is <strong>not</strong> “done.”</p>
+    <p>Numbers below come from <span class="mono">SCORECARD_M2.md</span>. We did not invent them.</p>
+    <div class="table-wrap" role="region" aria-label="Claim-loop honest scorecard" tabindex="0">
       <table>
         <thead>
           <tr>
             <th scope="col">Bar</th>
-            <th scope="col">Needed</th>
+            <th scope="col">Need</th>
+            <th scope="col">Got</th>
             <th scope="col">Result</th>
           </tr>
         </thead>
         <tbody>
           <tr class="bar-fail">
-            <th scope="row">Claim-pull</th>
-            <td>at least 7 of 8</td>
-            <td><strong>2/8</strong> <span class="miss">fail</span></td>
+            <th scope="row">Pull the claim on “should” posts</th>
+            <td>≥ 7 of 8</td>
+            <td><strong class="num-fail">2 of 8</strong></td>
+            <td><strong class="xd-fail-emphasis">FAIL</strong></td>
           </tr>
           <tr>
-            <th scope="row">False-yes</th>
-            <td>at most 1 of 4</td>
-            <td><strong>0/4</strong> <span class="ok">pass</span></td>
+            <th scope="row">Don’t false-alarm on controls</th>
+            <td>≤ 1 of 4</td>
+            <td><strong>0 of 4</strong></td>
+            <td><span class="ok">Pass</span></td>
           </tr>
           <tr>
-            <th scope="row">Rebuttals</th>
-            <td>at least 80% hold</td>
-            <td><strong>5/5</strong> <span class="ok">pass</span></td>
+            <th scope="row">Human pushbacks hold up</th>
+            <td>≥ 80% hold</td>
+            <td><strong>5 of 5</strong></td>
+            <td><span class="ok">Pass</span></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>Claim-pull failed, 2 of 8. One failed bar, and this run does not pass.</p>
-    <p class="exhibit-label">What worked</p>
-    <p>The filter held. All four control posts stayed off the desk: insults, a meme, and praise for the player. Zero wasted yeses.</p>
-    <p>On two posts with a record to check — a Reddit “Grade 1” cart claim, and Tyler Dunne’s anonymous report — the model said yes, and the claim line was usable. People wrote sourced pushbacks for all five posts it queued. Every one holds. They wait for Stephen. Nothing posts itself.</p>
-    <p class="exhibit-label">What failed</p>
-    <p>Pulling the claim is the broken piece. On most of the eight, the model treated a checkable injury claim, or a claim about how the league works, as a plain insult, and the claim line came back empty. Credit for a rough match — same claim, different words — still left the score at 2 of 8. Only the Reddit Grade-1 post and Dunne cleared it.</p>
-    <p>Three posts a person had already marked as worth a check never reached the queue: both Emmanuel Acho posts, and Boomer Esiason. On the second Acho post the model agreed a claim was there, left the line empty, and still said no.</p>
-    <p>Five posts did reach the queue: Dave Portnoy, Craig Carton, Will Compton, the Reddit Grade-1 post, and Tyler Dunne. Portnoy, Carton, and Compton arrived with no usable claim line. A person had to rebuild the claim from the post.</p>
-    <p class="exhibit-label">First pass, against the human answers</p>
-    <ul class="live-bars" aria-label="First-pass agreement on twelve posts">
-      <li><span class="lbl">Kind of post</span><span class="val">~42% <span class="frac">(5/12)</span></span></li>
-      <li><span class="lbl">Written claim</span><span class="val">25% <span class="frac">(3/12 exact)</span></span></li>
-      <li><span class="lbl">Worth a look?</span><span class="val">75% <span class="frac">(9/12)</span></span></li>
-    </ul>
-    <p class="muted">Claim-pull is the bar, and it failed at 2 of 8. The 75% only counts the yes-or-no question.</p>
-    <p class="score-meta">about $0.00123 · <span class="mono">typesafe/jev-1.13-20260917</span> on kind-of-post and worth-a-look · claim line via <span class="mono">gpt-4o-mini</span> workaround · run <span class="mono">claim-loop-run-20260926-235043</span></p>
+    <p><strong>Bottom line:</strong> the full loop did <strong>not</strong> clear all bars.</p>
+        <figure class="xd-fig" data-diagram="scorecard-bars" data-caption-source="figcaption" aria-label="Scorecard bars: Claim-pull FAIL 2/8, Control filter PASS 0/4, Pushbacks PASS 5/5">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="100%" height="auto" role="img" aria-labelledby="scorecard-bars-title scorecard-bars-desc">
+        <title id="scorecard-bars-title">Scorecard bars: Claim-pull FAIL 2 of 8, Control filter PASS 0 of 4 false alarms, Pushbacks PASS 5 of 5 hold</title>
+        <desc id="scorecard-bars-desc">Three honesty stamps. Claim-pull failed at 2 of 8. Control filter passed with 0 of 4 false alarms. Pushbacks passed 5 of 5 hold. One fail means keep iterating.</desc>
+        <style>
+        .xd-bg { fill: #16140F; }
+        .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+        .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+        .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+        .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+        .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+        .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+        .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+        .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+        .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+      </style>
+        <rect class="xd-bg" x="0" y="0" width="680" height="240" rx="8"/>
+
+        <!-- Stamp 1: Claim-pull FAIL -->
+        <g transform="rotate(-1 130 110)">
+          <rect class="xd-fill-rubric" x="24" y="36" width="212" height="140" rx="12" stroke-width="3"/>
+          <!-- FAIL stamp banner -->
+          <rect fill="#E25545" x="48" y="50" width="164" height="28" rx="4"/>
+          <text fill="#16140F" x="130" y="70" text-anchor="middle" font-size="16" font-weight="800"
+                font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">FAIL</text>
+          <text class="xd-label" x="130" y="110" text-anchor="middle" font-size="15">Claim-pull</text>
+          <text class="xd-rubric" x="130" y="140" text-anchor="middle" font-size="28" font-weight="800">2/8</text>
+          <text class="xd-small" x="130" y="162" text-anchor="middle">need ≥7/8</text>
+        </g>
+
+        <!-- Stamp 2: Control filter PASS -->
+        <g>
+          <rect class="xd-fill-pass" x="254" y="36" width="172" height="140" rx="11" stroke-width="3"/>
+          <rect fill="#6FBF8A" x="274" y="50" width="132" height="28" rx="4"/>
+          <text fill="#16140F" x="340" y="70" text-anchor="middle" font-size="16" font-weight="800"
+                font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">PASS</text>
+          <text class="xd-label" x="340" y="110" text-anchor="middle" font-size="14">Control filter</text>
+          <text class="xd-pass" x="340" y="138" text-anchor="middle" font-size="22" font-weight="800">0/4</text>
+          <text class="xd-small" x="340" y="160" text-anchor="middle">false alarms</text>
+        </g>
+
+        <!-- Stamp 3: Pushbacks PASS -->
+        <g transform="rotate(1 550 110)">
+          <rect class="xd-fill-pass" x="444" y="36" width="212" height="140" rx="12" stroke-width="3"/>
+          <rect fill="#6FBF8A" x="488" y="50" width="124" height="28" rx="4"/>
+          <text fill="#16140F" x="550" y="70" text-anchor="middle" font-size="16" font-weight="800"
+                font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">PASS</text>
+          <text class="xd-label" x="550" y="110" text-anchor="middle" font-size="15">Pushbacks</text>
+          <text class="xd-pass" x="550" y="140" text-anchor="middle" font-size="28" font-weight="800">5/5</text>
+          <text class="xd-small" x="550" y="162" text-anchor="middle">hold</text>
+        </g>
+
+        <text class="xd-caption" x="340" y="210" text-anchor="middle">One fail = keep iterating</text>
+
+      </svg>
+      <figcaption>One fail = keep iterating</figcaption>
+    </figure>
     <div class="nota">
       <span class="scaps">What it means</span>
       <p style="margin:0">The filter — don’t waste a person on a soft dunk — looks promising. The claim extractor, the piece that writes the claim down, is not ready as the spine. Stage A’s five grades are a different test. Those rates stay on the <a href="#" data-open="scorecard">final scorecard</a>.</p>
     </div>
-    <p class="exhibit-label" style="margin-top:1rem">Five queued drafts</p>
+    <p class="faint">Next: <a href="#" data-open="worked">What worked</a> · <a href="#" data-open="failed">What failed</a></p>
+  </template>
+
+  <template id="note-worked" data-title="What worked" data-wide="0">
+    <p><strong>The filter is good.</strong></p>
+    <p>On all <strong>4</strong> controls, Jev said “don’t wake anyone.”</p>
+    <p>Zero meme/insult-only junk in the human queue.</p>
+    <p><strong>When a clear claim got through, humans finished strong.</strong></p>
+    <p><strong>5</strong> drafts. All <strong>5</strong> held with receipts:</p>
     <ul class="gold-list">
-      <li><strong>Portnoy</strong> — reckless. Holds. Week-to-week team reporting, and the clip is on the record.</li>
-      <li><strong>Carton</strong> — reckless. Holds. The medical baseline against a claim that the Achilles reaction was an act.</li>
-      <li><strong>Compton</strong> — unsupported, and unfair. Holds. No league ban on the cart for a hamstring.</li>
-      <li><strong>Reddit Grade 1</strong> — misleading. Holds. The team site never stamped Grade 1.</li>
-      <li><strong>Dunne</strong> — needs context. Holds as a check on the reporting only. The diagnosis stays unsupported, and the privacy hedge stays.</li>
+      <li><strong>Portnoy / Carton</strong> — reckless hindsight about injury severity</li>
+      <li><strong>Compton</strong> — fake “you can’t cart for a hamstring” rule</li>
+      <li><strong>Reddit</strong> — “first Grade 1 cart in NFL history” (misleading)</li>
+      <li><strong>Dunne</strong> — anonymous dyslexia <em>reporting</em> (context needed; don’t treat diagnosis as settled)</li>
     </ul>
+    <p>Drafts only. Person gate still on.</p>
+    <p class="faint">Next: <a href="#" data-open="failed">What failed</a></p>
+  </template>
+
+  <template id="note-failed" data-title="What failed" data-wide="0">
+    <p><strong>Claim-pull broke.</strong></p>
+    <p>We needed Jev to spot a checkable claim <strong>even when the tone is mean</strong>, then write that claim in one line.</p>
+    <p>It only cleared both steps on <strong>2 of 8</strong> “should” posts.</p>
+    <p>Often it called a fact “just an insult,” left the claim line blank, and still sometimes woke a human.</p>
+    <p><strong>3</strong> posts we thought deserved a fact-check never reached the queue (two Acho lines, one Esiason take).</p>
+    <p><strong>Plain English:</strong> “Don’t waste humans” looks solvable. “Auto-extract the claim” is <strong>not</strong> ready to be the spine yet.</p>
+    <p class="faint">Next: <a href="#" data-open="example">Tiny example</a></p>
+  </template>
+
+  <template id="note-example" data-title="Tiny example" data-wide="0">
+    <p>Someone says crying on the cart is a “sacred rule” only for season-enders.</p>
+    <p>That is a checkable toughness rule, not just shade.</p>
+    <p>Humans already have receipts for that dunk.</p>
+    <p>Jev called it insult and said skip.</p>
+    <p>That’s the miss shape we must fix next.</p>
+    <p class="muted">Related warm-up walkthrough: <a href="#" data-open="walkthrough">Acho tw-001</a>.</p>
+    <p class="faint">Next: <a href="#" data-open="not-this">What this is not</a></p>
+  </template>
+
+  <template id="note-not-this" data-title="What this is not" data-wide="0">
+    <p>Not a pile-on machine.</p>
+    <p>Not auto-posting dunks back.</p>
+    <p>Not a claim that Stage A “proved the product.”</p>
+    <p>Stage A proved we can grade <strong>tone</strong> on a frozen set.</p>
+    <p>Claim-loop showed the <strong>product filter</strong> can stay clean, while <strong>claim extract</strong> still needs work.</p>
+    <p class="faint">Next: <a href="#" data-open="next">What happens next</a></p>
+  </template>
+
+  <template id="note-next" data-title="What happens next" data-wide="0">
+    <ol class="steps">
+      <li>Keep <a href="#" data-open="hub">Stage A</a> as the warm-up lesson.</li>
+      <li>Harden “insult + fact” so the fact half still gets pulled.</li>
+      <li>Don’t wake a human with an empty claim line.</li>
+      <li>Re-run claim-pull before anyone says “Jev pulls the claim” on the public site.</li>
+    </ol>
+    <p>Accuracy over heat. Especially on medical and anonymous-source stories.</p>
+    <p class="faint">Next: <a href="#" data-open="builders">For builders</a></p>
+  </template>
+
+  <template id="note-builders" data-title="For builders" data-wide="0">
+    <p>The five figures on this page fill the diagram slots: hero map, Jev in one breath, two labs, claim-loop flow, and scorecard bars.</p>
+    <p>Primary numbers are the locked M2 scorecard. Claim-pull <strong class="xd-fail-emphasis">FAIL 2/8</strong>. Control <strong>0/4</strong>. Pushbacks <strong>5/5</strong>.</p>
+    <div class="files">
+      <ul>
+        <li>Primary numbers: <code>jev_claim_loop/out/SCORECARD_M2.md</code></li>
+        <li>Pushback drafts: <code>jev_claim_loop/out/pushbacks_m2.md</code></li>
+        <li>Misses: <code>jev_claim_loop/out/misses_gold_yes_jev_no.md</code></li>
+        <li>Shorter prior section: <code>jev_claim_loop/out/claim_loop_results_narrative.md</code></li>
+        <li>Diagram files: <code>assets/hero-map.svg</code>, <code>assets/jev-one-breath.svg</code>, <code>assets/two-labs.svg</code>, <code>assets/claim-loop-flow.svg</code>, <code>assets/scorecard-bars.svg</code></li>
+      </ul>
+    </div>
+    <p class="faint">Stage A paths stay on <a href="#" data-open="files">Files</a>.</p>
   </template>
 </div>
 
 <script>
 (function () {
-  var ROOT = "hub";
+  var ROOT = "page";
   var MAX_VISIBLE = 4;
   var stackEl = document.getElementById("stack");
   var trailEl = document.getElementById("stack-trail");
@@ -1255,7 +1739,7 @@
   }
 
   function shortTitle(id) {
-    if (id === ROOT) return "Hub";
+    if (id === "hub") return "Hub";
     var t = noteTitle(id);
     var cut = t.split("·")[0].trim();
     return cut || t;
