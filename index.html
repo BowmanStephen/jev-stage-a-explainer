@@ -607,6 +607,18 @@
     letter-spacing: 0.03em;
     font-size: 0.72rem;
   }
+  .ok {
+    color: var(--ink);
+    font-weight: 600;
+    font-family: var(--font-ui);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    font-size: 0.72rem;
+  }
+  tbody tr.bar-fail {
+    background: color-mix(in srgb, var(--rubric) 14%, var(--paper));
+    box-shadow: inset 2px 0 0 0 var(--rubric);
+  }
   .skip {
     color: var(--slate);
     font-family: var(--font-ui);
@@ -738,6 +750,12 @@
       <li><button type="button" class="index-btn" data-open="all-20">All 20 posts</button></li>
       <li><button type="button" class="index-btn" data-open="files">Files</button></li>
     </ul>
+    <div class="index-group">
+      <p class="index-group-label">Other test</p>
+      <ul class="index-list">
+        <li><button type="button" class="index-btn" data-open="claim-loop">Claim-loop</button></li>
+      </ul>
+    </div>
   </nav>
 
   <aside class="rail" aria-label="Grade shortcuts">
@@ -1149,6 +1167,69 @@
       </ul>
       <p class="faint" style="margin-top:0.75rem">Paths are under <span class="mono">/workspace/caleb-williams-fact-check/</span>.</p>
     </div>
+  </template>
+
+  <template id="note-claim-loop" data-title="Claim-loop experiment" data-wide="0">
+    <p>This is a separate experiment from the Stage A lesson. Twelve posts. Three questions. The job was to pull a checkable claim out of a dunk, and to send a person only the posts that need a check.</p>
+    <p><strong>Claim-pull</strong> means the model pulled the claim. On a post that should contain a real claim, it counts only when the model marks that a claim is there and writes down roughly the same claim a person would. Wording can differ. The core has to match. Eight posts were in that set. The bar was at least 7 of 8.</p>
+    <p><strong>False-yes</strong> is a wasted yes. A control post — a pure insult, a meme, or praise — gets sent to a person as if it needed a fact-check. Four posts were in that set. The bar was at most 1 of 4.</p>
+    <p class="exhibit-label">Three bars</p>
+    <div class="table-wrap" role="region" aria-label="Claim-loop bars" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Bar</th>
+            <th scope="col">Needed</th>
+            <th scope="col">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bar-fail">
+            <th scope="row">Claim-pull</th>
+            <td>at least 7 of 8</td>
+            <td><strong>2/8</strong> <span class="miss">fail</span></td>
+          </tr>
+          <tr>
+            <th scope="row">False-yes</th>
+            <td>at most 1 of 4</td>
+            <td><strong>0/4</strong> <span class="ok">pass</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Rebuttals</th>
+            <td>at least 80% hold</td>
+            <td><strong>5/5</strong> <span class="ok">pass</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Claim-pull failed, 2 of 8. One failed bar, and this run does not pass.</p>
+    <p class="exhibit-label">What worked</p>
+    <p>The filter held. All four control posts stayed off the desk: insults, a meme, and praise for the player. Zero wasted yeses.</p>
+    <p>On two posts with a record to check — a Reddit “Grade 1” cart claim, and Tyler Dunne’s anonymous report — the model said yes, and the claim line was usable. People wrote sourced pushbacks for all five posts it queued. Every one holds. They wait for Stephen. Nothing posts itself.</p>
+    <p class="exhibit-label">What failed</p>
+    <p>Pulling the claim is the broken piece. On most of the eight, the model treated a checkable injury claim, or a claim about how the league works, as a plain insult, and the claim line came back empty. Credit for a rough match — same claim, different words — still left the score at 2 of 8. Only the Reddit Grade-1 post and Dunne cleared it.</p>
+    <p>Three posts a person had already marked as worth a check never reached the queue: both Emmanuel Acho posts, and Boomer Esiason. On the second Acho post the model agreed a claim was there, left the line empty, and still said no.</p>
+    <p>Five posts did reach the queue: Dave Portnoy, Craig Carton, Will Compton, the Reddit Grade-1 post, and Tyler Dunne. Portnoy, Carton, and Compton arrived with no usable claim line. A person had to rebuild the claim from the post.</p>
+    <p class="exhibit-label">First pass, against the human answers</p>
+    <ul class="live-bars" aria-label="First-pass agreement on twelve posts">
+      <li><span class="lbl">Kind of post</span><span class="val">~42% <span class="frac">(5/12)</span></span></li>
+      <li><span class="lbl">Written claim</span><span class="val">25% <span class="frac">(3/12 exact)</span></span></li>
+      <li><span class="lbl">Worth a look?</span><span class="val">75% <span class="frac">(9/12)</span></span></li>
+    </ul>
+    <p class="muted">Claim-pull is the bar, and it failed at 2 of 8. The 75% only counts the yes-or-no question.</p>
+    <p class="score-meta">about $0.00123 · <span class="mono">typesafe/jev-1.13-20260917</span> on kind-of-post and worth-a-look · claim line via <span class="mono">gpt-4o-mini</span> workaround · run <span class="mono">claim-loop-run-20260926-235043</span></p>
+    <div class="nota">
+      <span class="scaps">What it means</span>
+      <p style="margin:0">The filter — don’t waste a person on a soft dunk — looks promising. The claim extractor, the piece that writes the claim down, is not ready as the spine. Stage A’s five grades are a different test. Those rates stay on the <a href="#" data-open="scorecard">final scorecard</a>.</p>
+    </div>
+    <p class="exhibit-label" style="margin-top:1rem">Five queued drafts</p>
+    <ul class="gold-list">
+      <li><strong>Portnoy</strong> — reckless. Holds. Week-to-week team reporting, and the clip is on the record.</li>
+      <li><strong>Carton</strong> — reckless. Holds. The medical baseline against a claim that the Achilles reaction was an act.</li>
+      <li><strong>Compton</strong> — unsupported, and unfair. Holds. No league ban on the cart for a hamstring.</li>
+      <li><strong>Reddit Grade 1</strong> — misleading. Holds. The team site never stamped Grade 1.</li>
+      <li><strong>Dunne</strong> — needs context. Holds as a check on the reporting only. The diagnosis stays unsupported, and the privacy hedge stays.</li>
+    </ul>
   </template>
 </div>
 
