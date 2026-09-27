@@ -1169,67 +1169,72 @@
     </div>
   </template>
 
-  <template id="note-claim-loop" data-title="Claim-loop experiment" data-wide="0">
-    <p>This is a separate experiment from the Stage A lesson. Twelve posts. Three questions. The job was to pull a checkable claim out of a dunk, and to send a person only the posts that need a check.</p>
-    <p><strong>Claim-pull</strong> means the model pulled the claim. On a post that should contain a real claim, it counts only when the model marks that a claim is there and writes down roughly the same claim a person would. Wording can differ. The core has to match. Eight posts were in that set. The bar was at least 7 of 8.</p>
-    <p><strong>False-yes</strong> is a wasted yes. A control post — a pure insult, a meme, or praise — gets sent to a person as if it needed a fact-check. Four posts were in that set. The bar was at most 1 of 4.</p>
-    <p class="exhibit-label">Three bars</p>
+  <template id="note-claim-loop" data-title="Claim-loop test" data-wide="1">
+    <p class="lead">Did the product idea work? Not yet. One big piece failed. Two other pieces passed. We are not claiming the full loop works.</p>
+    <p><a href="#" data-open="hub">Stage A</a> was the warm-up lab: teach a scorer to grade dunk tone on a frozen pack of twenty posts. This claim-loop run is the real product question: can that scorer find the <strong>checkable claim</strong> inside a dunk, send only the right posts to a human, and help that human write a sourced pushback?</p>
+    <p class="exhibit-label">What we tested</p>
+    <p>We ran twelve public posts:</p>
+    <ul class="gold-list">
+      <li><strong>Eight “should flag” posts</strong> — dunks that include a claim worth fact-checking (injury severity, fake “rules,” Grade 1 cart history, anonymous medical reporting, and so on).</li>
+      <li><strong>Four “control” posts</strong> — insults, memes, or defender praise that should <strong>not</strong> wake a human.</li>
+    </ul>
+    <p>For each post the scorer answered three questions: what kind of speech is this, what is the checkable claim in one line, and should a human fact-check it?</p>
+    <p class="score-meta">Sep 26, 2026 (CT) · about $0.00123 · <span class="mono">typesafe/jev-1.13-20260917</span> · claim wording used a small helper model when needed</p>
+    <p class="exhibit-label">The three bars</p>
     <div class="table-wrap" role="region" aria-label="Claim-loop bars" tabindex="0">
       <table>
         <thead>
           <tr>
+            <th scope="col">What we asked</th>
             <th scope="col">Bar</th>
-            <th scope="col">Needed</th>
             <th scope="col">Result</th>
           </tr>
         </thead>
         <tbody>
           <tr class="bar-fail">
-            <th scope="row">Claim-pull</th>
-            <td>at least 7 of 8</td>
-            <td><strong>2/8</strong> <span class="miss">fail</span></td>
+            <th scope="row">Pull the claim on “should flag” posts</th>
+            <td>At least 7 of 8</td>
+            <td><span class="miss">Fail</span> — 2 of 8</td>
           </tr>
           <tr>
-            <th scope="row">False-yes</th>
-            <td>at most 1 of 4</td>
-            <td><strong>0/4</strong> <span class="ok">pass</span></td>
+            <th scope="row">Don’t false-alarm on controls</th>
+            <td>At most 1 of 4</td>
+            <td><span class="ok">Pass</span> — 0 of 4</td>
           </tr>
           <tr>
-            <th scope="row">Rebuttals</th>
-            <td>at least 80% hold</td>
-            <td><strong>5/5</strong> <span class="ok">pass</span></td>
+            <th scope="row">Human pushbacks hold up</th>
+            <td>At least 80% hold</td>
+            <td><span class="ok">Pass</span> — 5 of 5</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>Claim-pull failed, 2 of 8. One failed bar, and this run does not pass.</p>
+    <p><strong>Overall:</strong> any one fail means we iterate. This run did <strong>not</strong> clear all bars.</p>
     <p class="exhibit-label">What worked</p>
-    <p>The filter held. All four control posts stayed off the desk: insults, a meme, and praise for the player. Zero wasted yeses.</p>
-    <p>On two posts with a record to check — a Reddit “Grade 1” cart claim, and Tyler Dunne’s anonymous report — the model said yes, and the claim line was usable. People wrote sourced pushbacks for all five posts it queued. Every one holds. They wait for Stephen. Nothing posts itself.</p>
+    <p><strong>The filter is promising.</strong> On the four controls (pure insult, meme, defender praise), the scorer never said “yes, wake a human.” Zero wasted insults in the queue.</p>
+    <p><strong>When a clear history or medical allegation showed up, humans could finish the job.</strong> Five posts reached the queue. Humans wrote draft pushbacks with receipts for each one. All five held: Portnoy and Carton (reckless hindsight severity dunks), Compton (fake “you can’t cart for a hamstring” rule), Reddit “first Grade 1 cart” (misleading), and Dunne’s anonymous dyslexia reporting (context needed — report the reporting, don’t treat diagnosis as settled). Drafts only. A person still decides whether anything goes public.</p>
     <p class="exhibit-label">What failed</p>
-    <p>Pulling the claim is the broken piece. On most of the eight, the model treated a checkable injury claim, or a claim about how the league works, as a plain insult, and the claim line came back empty. Credit for a rough match — same claim, different words — still left the score at 2 of 8. Only the Reddit Grade-1 post and Dunne cleared it.</p>
-    <p>Three posts a person had already marked as worth a check never reached the queue: both Emmanuel Acho posts, and Boomer Esiason. On the second Acho post the model agreed a claim was there, left the line empty, and still said no.</p>
-    <p>Five posts did reach the queue: Dave Portnoy, Craig Carton, Will Compton, the Reddit Grade-1 post, and Tyler Dunne. Portnoy, Carton, and Compton arrived with no usable claim line. A person had to rebuild the claim from the post.</p>
-    <p class="exhibit-label">First pass, against the human answers</p>
-    <ul class="live-bars" aria-label="First-pass agreement on twelve posts">
-      <li><span class="lbl">Kind of post</span><span class="val">~42% <span class="frac">(5/12)</span></span></li>
-      <li><span class="lbl">Written claim</span><span class="val">25% <span class="frac">(3/12 exact)</span></span></li>
-      <li><span class="lbl">Worth a look?</span><span class="val">75% <span class="frac">(9/12)</span></span></li>
-    </ul>
-    <p class="muted">Claim-pull is the bar, and it failed at 2 of 8. The 75% only counts the yes-or-no question.</p>
-    <p class="score-meta">about $0.00123 · <span class="mono">typesafe/jev-1.13-20260917</span> on kind-of-post and worth-a-look · claim line via <span class="mono">gpt-4o-mini</span> workaround · run <span class="mono">claim-loop-run-20260926-235043</span></p>
-    <div class="nota">
-      <span class="scaps">What it means</span>
-      <p style="margin:0">The filter — don’t waste a person on a soft dunk — looks promising. The claim extractor, the piece that writes the claim down, is not ready as the spine. Stage A’s five grades are a different test. Those rates stay on the <a href="#" data-open="scorecard">final scorecard</a>.</p>
+    <p><strong>Claim-pull is the broken piece.</strong> We needed the scorer to (1) notice a checkable claim even when the tone is insulting, and (2) write that claim in plain words. It only cleared both steps on <strong>2 of 8</strong> “should flag” posts (Reddit Grade 1 cart, Dunne reporting).</p>
+    <p>Often it labeled injury or “sacred rule” claims as pure insult, left the claim line empty, and still sometimes woke a human anyway — so people had to rebuild the claim by hand. Three posts we believed deserved a fact-check never reached the queue at all: both Acho sacred-tears / cart-walk lines, and Esiason’s entitlement-to-firing take.</p>
+    <p><strong>Plain meaning:</strong> don’t waste humans on soft dunks looks solvable. Auto-extracting the claim is <strong>not</strong> ready to be the spine of the product yet.</p>
+    <p class="exhibit-label">One concrete miss</p>
+    <p>Emmanuel Acho’s “crying on the cart is sacred / reserved for season-enders” line is a checkable toughness rule dressed as culture. Gold said: pull that claim and wake a human. The scorer called it insult, wrote no claim line, and said no. We already have a sourced package for that dunk. The machine just didn’t route it.</p>
+    <p class="exhibit-label">What this means next</p>
+    <p>Keep Stage A as the warm-up lesson on tone. Treat this claim-loop scorecard as the product test so far:</p>
+    <ol class="steps">
+      <li>Harden “insult plus fact” so the factual half still gets extracted.</li>
+      <li>Don’t say “wake a human” with an empty claim line.</li>
+      <li>Re-run claim-pull before anyone says “Jev pulls the claim” on the public site.</li>
+    </ol>
+    <p>Accuracy over heat still holds — especially on medical and anonymous-source stories.</p>
+    <p class="exhibit-label">If you want the files</p>
+    <div class="files">
+      <ul>
+        <li>Scorecard: <code>jev_claim_loop/out/SCORECARD_M2.md</code></li>
+        <li>Five pushback drafts: <code>jev_claim_loop/out/pushbacks_m2.md</code></li>
+        <li>Three missed gold-yes posts: <code>jev_claim_loop/out/misses_gold_yes_jev_no.md</code></li>
+      </ul>
     </div>
-    <p class="exhibit-label" style="margin-top:1rem">Five queued drafts</p>
-    <ul class="gold-list">
-      <li><strong>Portnoy</strong> — reckless. Holds. Week-to-week team reporting, and the clip is on the record.</li>
-      <li><strong>Carton</strong> — reckless. Holds. The medical baseline against a claim that the Achilles reaction was an act.</li>
-      <li><strong>Compton</strong> — unsupported, and unfair. Holds. No league ban on the cart for a hamstring.</li>
-      <li><strong>Reddit Grade 1</strong> — misleading. Holds. The team site never stamped Grade 1.</li>
-      <li><strong>Dunne</strong> — needs context. Holds as a check on the reporting only. The diagnosis stays unsupported, and the privacy hedge stays.</li>
-    </ul>
   </template>
 </div>
 
