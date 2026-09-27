@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" width="100%" height="auto" role="img" aria-labelledby="title desc">
+  <title id="title">Claim-loop flow: Post to three questions to yes human draft or no skip</title>
+  <desc id="desc">Horizontal triage flow. Post, three questions, yes path to human with receipts and draft pushback, no path to skip. Caption: Triage for a human. Not a harassment bot.</desc>
+  <style>
+  .xd-bg { fill: #16140F; }
+  .xd-box { fill: none; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+  .xd-box-fill { fill: #16140F; stroke: #EDE8DE; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+  .xd-dash { fill: none; stroke: #A8A29A; stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+  .xd-ink { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-muted { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-rubric { fill: #E25545; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-pass { fill: #6FBF8A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .xd-stroke-rubric { stroke: #E25545; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+  .xd-stroke-pass { stroke: #6FBF8A; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+  .xd-fill-rubric { fill: none; stroke: #E25545; stroke-width: 2.2; }
+  .xd-fill-pass { fill: none; stroke: #6FBF8A; stroke-width: 2.2; }
+  .xd-caption { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; font-style: italic; }
+  .xd-label { fill: #EDE8DE; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; font-weight: 600; }
+  .xd-small { fill: #A8A29A; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 12px; }
+</style>
+  <rect class="xd-bg" x="0" y="0" width="720" height="260" rx="8"/>
+
+  <!-- Post -->
+  <g>
+    <rect class="xd-box-fill" x="16" y="70" width="88" height="56" rx="9"/>
+    <text class="xd-label" x="60" y="104" text-anchor="middle">Post</text>
+  </g>
+  <path class="xd-dash" d="M108 98 L138 98"/>
+  <path class="xd-box" d="M132 91 L148 98 L132 105" fill="none"/>
+
+  <!-- 3 questions -->
+  <g>
+    <rect class="xd-box-fill" x="152" y="58" width="120" height="80" rx="10"/>
+    <text class="xd-label" x="212" y="88" text-anchor="middle" font-size="13">3 questions</text>
+    <text class="xd-small" x="212" y="108" text-anchor="middle">type · claim · wake?</text>
+  </g>
+  <path class="xd-dash" d="M276 98 L306 98"/>
+  <path class="xd-box" d="M300 91 L316 98 L300 105" fill="none"/>
+
+  <!-- yes? diamond-ish box -->
+  <g transform="rotate(-1 360 98)">
+    <rect class="xd-box-fill" x="324" y="70" width="72" height="56" rx="8"/>
+    <text class="xd-label" x="360" y="104" text-anchor="middle">yes?</text>
+  </g>
+
+  <!-- yes branch → -->
+  <path class="xd-dash" d="M400 98 L440 98"/>
+  <path class="xd-box" d="M434 91 L450 98 L434 105" fill="none"/>
+  <text class="xd-pass" x="420" y="88" text-anchor="middle" font-size="11" font-weight="700">yes</text>
+
+  <!-- Human + receipts -->
+  <g>
+    <rect class="xd-box-fill" x="456" y="58" width="120" height="80" rx="10"/>
+    <text class="xd-label" x="516" y="88" text-anchor="middle" font-size="13">Human</text>
+    <text class="xd-label" x="516" y="108" text-anchor="middle" font-size="13">+ receipts</text>
+  </g>
+  <path class="xd-dash" d="M580 98 L610 98"/>
+  <path class="xd-box" d="M604 91 L620 98 L604 105" fill="none"/>
+
+  <!-- Draft pushback -->
+  <g transform="rotate(0.7 670 98)">
+    <rect class="xd-box-fill" x="626" y="70" width="80" height="56" rx="9"/>
+    <text class="xd-label" x="666" y="96" text-anchor="middle" font-size="12">Draft</text>
+    <text class="xd-label" x="666" y="112" text-anchor="middle" font-size="12">pushback</text>
+  </g>
+
+  <!-- no branch down -->
+  <path class="xd-dash" d="M360 130 L360 178"/>
+  <path class="xd-box" d="M353 172 L360 188 L367 172" fill="none"/>
+  <text class="xd-muted" x="376" y="160" font-size="11" font-weight="700">no</text>
+
+  <!-- Skip -->
+  <g>
+    <rect class="xd-box-fill" x="316" y="196" width="88" height="40" rx="8"/>
+    <text class="xd-muted" x="360" y="222" text-anchor="middle" font-size="14" font-weight="600">Skip</text>
+  </g>
+
+  <text class="xd-caption" x="360" y="252" text-anchor="middle">Triage for a human. Not a harassment bot.</text>
+
+</svg>
