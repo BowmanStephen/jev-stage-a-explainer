@@ -383,10 +383,12 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: auto; /* snap — do not chain with pane-in */
+    scroll-snap-type: x mandatory;
     position: relative;
     z-index: 1;
   }
   .pane {
+    scroll-snap-align: start;
     flex: 0 0 var(--pane-w);
     width: var(--pane-w);
     max-width: 100%;

@@ -7,3 +7,5 @@ Stage A is the warm-up lesson (tone rates on the final scorecard — do not hand
 Diagram source files live in `assets/`. The five figures are inlined in `index.html`. Figure chrome is `assets/diagrams.css`.
 
 Deploy: Vercel static (root `index.html`).
+
+When the viewport width changes, the note stack realigns the top open note without moving keyboard focus or the page's vertical scroll position. On phones, the index continues to scroll with the page.
